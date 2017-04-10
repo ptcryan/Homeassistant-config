@@ -99,8 +99,8 @@ sensor:
       - battery
       - last_activity
       - volume
-      - ding
-      - motion
+      - last_ding
+      - last_motion
 
 # foscam camera interface
 camera:
