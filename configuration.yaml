@@ -1,0 +1,195 @@
+homeassistant:
+  # Name of the location where Home Assistant is running
+  name: Home
+  # Location required to calculate the time the sun rises and sets
+  latitude: !secret lat
+  longitude: !secret lon
+  # Impacts weather/sunrise data (altitude above sea level in meters)
+  elevation: 258
+  # metric for Metric, imperial for Imperial
+  unit_system: imperial
+  # Pick yours from here: http://en.wikipedia.org/wiki/List_of_tz_database_time_zones
+  time_zone: America/New_York
+
+# Enable config panel
+config:
+
+# Show links to resources in log and frontend
+introduction:
+
+# Enables the frontend
+frontend:
+
+# Database controls
+recorder:
+  db_url: postgres://@/homeassistant
+  purge_days: 8
+
+http:
+  # Uncomment this to add a password (recommended!)
+  api_password: !secret http_password
+  # Uncomment this if you are using SSL or running in Docker etc
+  # base_url: example.duckdns.org:8123
+  ip_ban_enabled: True
+  login_attempts_threshold: 5
+
+# Checks for available updates
+updater:
+
+# Discover some devices automatically
+discovery:
+
+# Allows you to issue voice commands from the frontend in enabled browsers
+conversation:
+
+# Enables support for tracking state changes over time.
+history:
+
+# View all events in a logbook
+logbook:
+
+# Track the sun
+sun:
+
+# Weather Prediction
+sensor:
+#  platform: yr
+  - platform: wunderground
+    api_key: !secret wunderground_api_key
+    monitored_conditions:
+      - alerts
+      - precip_today_in
+      - temp_f
+  - platform: systemmonitor
+    resources:
+      - type: disk_use_percent
+        arg: /
+      - type: memory_use_percent
+      - type: last_boot
+      - type: processor_use
+  - platform: speedtest
+    minute:
+      - 55
+      - 10
+      - 25
+      - 40
+    monitored_conditions:
+      - ping
+      - download
+      - upload
+  - platform: mqtt
+    state_topic: 'office/sensor1'
+    name: 'Temperature'
+    unit_of_measurement: 'deg F'
+    value_template: '{{ value_json.temperature }}'
+  - platform: mqtt
+    state_topic: 'office/sensor1'
+    name: 'Humidity'
+    unit_of_measurement: '% RH'
+    value_template: '{{ value_json.humidity }}'
+  - platform: mqtt
+    state_topic: 'office/sensor1'
+    name: 'Movement'
+    unit_of_measurement: 'bool'
+    value_template: '{{ value_json.pir }}'
+  - platform: ring
+    username: !secret ring_username
+    password: !secret ring_password
+    monitored_conditions:
+      - battery
+      - last_activity
+      - volume
+      - ding
+      - motion
+
+# foscam camera interface
+camera:
+  platform: foscam
+  ip: !secret camera_ip
+  username: !secret camera_username
+  password: !secret camera_password
+
+# Text to speech
+tts:
+  platform: google
+
+# This assumes that MQTT server is running separately
+mqtt:
+  broker: !secret mqtt_ip
+  port: 1883
+  client_id: home-assistant-1
+  keepalive: 60
+  username: !secret mqtt_username
+  password: !secret mqtt_password
+  protocol: 3.1
+  birth_message:
+    topic: 'hass/status'
+    payload: 'online'
+    qos: 1
+    retain: true
+  will_message:
+    topic: 'hass/status'
+    payload: 'offline'
+    qos: 1
+    retain: true
+
+light:
+  - platform: hue
+    host: !secret hue_ip
+
+  - platform: mqtt
+    name: "node light"
+    state_topic: "hass/lamp2/status"
+    command_topic: "hass/lamp2/switch"
+    optimistic: false
+
+device_tracker:
+  - platform: owntracks
+
+zone:
+  name: !secret zone_0_name
+  latitude: !secret zone_0_lat
+  longitude: !secret zone_0_lon
+  radius: 150
+  icon: !secret zone_0_icon
+
+zone 2:
+  name: !secret zone_2_name
+  latitude: !secret zone_2_lat
+  longitude: !secret zone_2_lon
+  radius: 175
+  icon: !secret zone_2_icon
+
+zone 3:
+  name: !secret zone_3_name
+  latitude: !secret zone_3_lat
+  longitude: !secret zone_3_lon
+  radius: 200
+  icon: !secret zone_3_icon
+
+ecobee:
+  api_key: !secret ecobee_api_key
+
+#############################
+#       Automations         #
+#############################
+automation:
+- alias: Turn on desk light when there is movement
+  trigger:
+    platform: state
+    entity_id: sensor.movement
+    to: '1'
+  action:
+    service: homeassistant.turn_on
+    entity_id: light.desk_lamp
+
+- alias: Turn off desk light 10 minutes after last movement
+  trigger:
+    platform: state
+    entity_id: sensor.movement
+    to: '0'
+    for:
+      minutes: 10
+  action:
+    service: homeassistant.turn_off
+    entity_id: light.desk_lamp
