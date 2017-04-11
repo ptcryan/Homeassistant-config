@@ -51,6 +51,11 @@ logbook:
 # Track the sun
 sun:
 
+# password for Ring doorbell account
+ring:
+  username: !secret ring_username
+  password: !secret ring_password
+
 # Weather Prediction
 sensor:
 #  platform: yr
@@ -93,14 +98,25 @@ sensor:
     unit_of_measurement: 'bool'
     value_template: '{{ value_json.pir }}'
   - platform: ring
-    username: !secret ring_username
-    password: !secret ring_password
     monitored_conditions:
       - battery
       - last_activity
       - volume
       - last_ding
       - last_motion
+  - platform: darksky
+    api_key: !secret darksky_api_key
+    monitored_conditions:
+      - summary
+      - icon
+      - nearest_storm_distance
+
+# adding Ring binary sensor. Not to be confused with Ring sensor.
+binary_sensor:
+  - platform: ring
+    monitored_conditions:
+      - ding
+      - motion
 
 # foscam camera interface
 camera:
