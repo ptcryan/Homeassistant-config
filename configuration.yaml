@@ -11,6 +11,16 @@ homeassistant:
   # Pick yours from here: http://en.wikipedia.org/wiki/List_of_tz_database_time_zones
   time_zone: America/New_York
 
+# Enable the iOS app
+ios:
+
+# Enable the configurator UI
+panel_iframe:
+  configurator:
+    title: Configurator
+    icon: mdi:wrench
+    url: !secret configurator_ip
+
 # Enable config panel
 config:
 
@@ -159,9 +169,6 @@ light:
     command_topic: "hass/lamp2/switch"
     optimistic: false
 
-device_tracker:
-  - platform: owntracks
-
 zone:
   name: !secret zone_0_name
   latitude: !secret zone_0_lat
@@ -186,26 +193,152 @@ zone 3:
 ecobee:
   api_key: !secret ecobee_api_key
 
+# Add Logitech Harmony Remote
+remote:
+  - platform: harmony
+    name: "Living Room TV"
+    host: !secret logitech_harmony_ip
+
+input_select:
+  living_room_tv:
+    name: "Living Room TV"
+    options:
+      - WATCH FIRE TV
+      - PowerOff
+      - WATCH TV
+      - Watch a Movie
+      - Use Mac
+      - FIRE TV WITH SURROUND
+    initial: PowerOff
+    icon: mdi:monitor
+
+script:
+  tvoff:
+    sequence:
+      - service: remote.turn_off
+        entity_id: remote.living_room_tv
+        data:
+          activity: -1
+  firetvsurround:
+    sequence:
+      - service: remote.turn_on
+        entity_id: remote.living_room_tv
+        data:
+          activity: 12106072
+  firetv:
+    sequence:
+      - service: remote.turn_on
+        entity_id: remote.living_room_tv
+        data:
+          activity: 12105863
+  broadcasttv:
+    sequence:
+      - service: remote.turn_on
+        entity_id: remote.living_room_tv
+        data:
+          activity: 12104283
+
+
 #############################
 #       Automations         #
 #############################
-automation:
-- alias: Turn on desk light when there is movement
-  trigger:
-    platform: state
-    entity_id: sensor.movement
-    to: '1'
-  action:
-    service: homeassistant.turn_on
-    entity_id: light.desk_lamp
 
-- alias: Turn off desk light 10 minutes after last movement
-  trigger:
-    platform: state
-    entity_id: sensor.movement
-    to: '0'
-    for:
-      minutes: 10
-  action:
-    service: homeassistant.turn_off
-    entity_id: light.desk_lamp
+automation:
+  - alias: "Power off the Television (HUB)"
+    trigger:
+      platform: state
+      entity_id: remote.living_room_tv
+    condition:
+      condition: template
+      value_template: '{{ trigger.to_state.attributes.current_activity == "PowerOff" }}'
+    action:
+      service: input_select.select_option
+      entity_id: input_select.living_room_tv
+      data:
+        option: 'PowerOff'
+  - alias: "Watch Fire TV with Surround Sound (HUB)"
+    trigger:
+      platform: state
+      entity_id: remote.living_room_tv
+    condition:
+      condition: template
+      value_template: '{{ trigger.to_state.attributes.current_activity == "FIRE TV WITH SURROUND" }}'
+    action:
+      service: input_select.select_option
+      entity_id: input_select.living_room_tv
+      data:
+        option: 'FIRE TV WITH SURROUND'
+  - alias: "Watch Fire TV (HUB)"
+    trigger:
+      platform: state
+      entity_id: remote.living_room_tv
+    condition:
+      condition: template
+      value_template: '{{ trigger.to_state.attributes.current_activity == "WATCH FIRE TV" }}'
+    action:
+      service: input_select.select_option
+      entity_id: input_select.living_room_tv
+      data:
+        option: 'WATCH FIRE TV'
+  - alias: "Watch Broadcast TV (HUB)"
+    trigger:
+      platform: state
+      entity_id: remote.living_room_tv
+    condition:
+      condition: template
+      value_template: '{{ trigger.to_state.attributes.current_activity == "WATCH TV" }}'
+    action:
+      service: input_select.select_option
+      entity_id: input_select.living_room_tv
+      data:
+        option: 'WATCH TV'
+  - alias: "Power off the Television (HA)"
+    trigger:
+      platform: state
+      entity_id: input_select.living_room_tv
+      to: 'PowerOff'
+    action:
+      service: script.turn_off
+      entity_id: script.tvoff
+  - alias: "Watch Fire TV with Surround Sound (HA)"
+    trigger:
+      platform: state
+      entity_id: input_select.living_room_tv
+      to: 'FIRE TV WITH SURROUND'
+    action:
+      service: script.turn_on
+      entity_id: script.firetvsurround
+  - alias: "Watch Fire TV (HA)"
+    trigger:
+      platform: state
+      entity_id: input_select.living_room_tv
+      to: 'WATCH FIRE TV'
+    action:
+      service: script.turn_on
+      entity_id: script.firetv
+  - alias: "Watch Broadcast TV (HA)"
+    trigger:
+      platform: state
+      entity_id: input_select.living_room_tv
+      to: 'WATCH TV'
+    action:
+      service: script.turn_on
+      entity_id: script.broadcasttv
+  - alias: Turn on desk light when there is movement
+    trigger:
+      platform: state
+      entity_id: sensor.movement
+      to: '1'
+    action:
+      service: homeassistant.turn_on
+      entity_id: light.desk_lamp
+  - alias: Turn off desk light 10 minutes after last movement
+    trigger:
+      platform: state
+      entity_id: sensor.movement
+      to: '0'
+      for:
+        minutes: 10
+    action:
+      service: homeassistant.turn_off
+      entity_id: light.desk_lamp
