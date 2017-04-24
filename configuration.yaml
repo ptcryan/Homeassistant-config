@@ -42,6 +42,8 @@ http:
   # base_url: example.duckdns.org:8123
   ip_ban_enabled: True
   login_attempts_threshold: 5
+  trusted_networks:
+    - 127.0.0.1
 
 # Checks for available updates
 updater:
