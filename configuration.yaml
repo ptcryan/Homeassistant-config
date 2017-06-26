@@ -11,8 +11,22 @@ homeassistant:
   # Pick yours from here: http://en.wikipedia.org/wiki/List_of_tz_database_time_zones
   time_zone: America/New_York
 
+  customize:
+    switch.left_garage_door:
+      icon: mdi:remote
+    switch.right_garage_door:
+      icon: mdi:remote
+    switch.wemo_insight:
+      icon: mdi:lightbulb
+      friendly_name: Sink Lights
+
 # Enable the iOS app
 ios:
+
+# Enable Z-Wave
+zwave:
+  usb_path: /dev/ttyACM0
+  debug: True
 
 # Enable the configurator UI
 panel_iframe:
@@ -122,6 +136,18 @@ sensor:
       - summary
       - icon
       - nearest_storm_distance
+  - platform: template
+    sensors:
+      garage_door_sensor_1:
+        friendly_name: 'Left Garage Door'
+        value_template: '{% if is_state("binary_sensor.ecolink_garage_door_tilt_sensor_sensor_6_0", "on") %}OPEN{% else %}CLOSED{% endif %}'
+        icon_template: '{% if is_state("binary_sensor.ecolink_garage_door_tilt_sensor_sensor_6_0", "on") %}mdi:garage-open{% else %}mdi:garage{% endif %}'
+  - platform: template
+    sensors:
+      garage_door_sensor_2:
+        friendly_name: 'Right Garage Door'
+        value_template: '{% if is_state("binary_sensor.ecolink_garage_door_tilt_sensor_sensor_4_0", "on") %}OPEN{% else %}CLOSED{% endif %}'
+        icon_template: '{% if is_state("binary_sensor.ecolink_garage_door_tilt_sensor_sensor_4_0", "on") %}mdi:garage-open{% else %}mdi:garage{% endif %}'
 
 # adding Ring binary sensor. Not to be confused with Ring sensor.
 binary_sensor:
@@ -131,35 +157,41 @@ binary_sensor:
       - motion
 
 # foscam camera interface
-camera:
-  platform: foscam
-  ip: !secret camera_ip
-  username: !secret camera_username
-  password: !secret camera_password
+#camera:
+#  platform: foscam
+#  ip: !secret camera_ip
+#  username: !secret camera_username
+#  password: !secret camera_password
 
 # Text to speech
 tts:
   platform: google
 
-# This assumes that MQTT server is running separately
+# Enable MQTT server
 mqtt:
-  broker: !secret mqtt_ip
-  port: 1883
-  client_id: home-assistant-1
-  keepalive: 60
-  username: !secret mqtt_username
-  password: !secret mqtt_password
-  protocol: 3.1
-  birth_message:
-    topic: 'hass/status'
-    payload: 'online'
+
+# Configuration for an MQTT Garage Door Controller (Cover)
+switch:
+  - platform: mqtt
+    name: "Left Garage Door"
+    state_topic: home/main_floor/garage/left_door/switch/status
+    command_topic: home/main_floor/garage/left_door/switch/set
+    payload_on: "1"
+    payload_off: "0"
+    optimistic: false
     qos: 1
     retain: true
-  will_message:
-    topic: 'hass/status'
-    payload: 'offline'
+    icon: mdi:remote
+  - platform: mqtt
+    name: "Right Garage Door"
+    state_topic: home/main_floor/garage/right_door/switch/status
+    command_topic: home/main_floor/garage/right_door/switch/set
+    payload_on: "1"
+    payload_off: "0"
+    optimistic: false
     qos: 1
     retain: true
+    icon: mdi:remote
 
 light:
   - platform: hue
@@ -239,7 +271,6 @@ script:
         entity_id: remote.living_room_tv
         data:
           activity: 12104283
-
 
 #############################
 #       Automations         #
