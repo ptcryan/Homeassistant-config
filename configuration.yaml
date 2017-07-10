@@ -38,9 +38,6 @@ panel_iframe:
 # Enable config panel
 config:
 
-# Show links to resources in log and frontend
-introduction:
-
 # Enables the frontend
 frontend:
 
