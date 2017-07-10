@@ -169,6 +169,7 @@ tts:
 
 # Enable MQTT server
 mqtt:
+  client_id: HA_Server_6b7359
 
 # Configuration for an MQTT Garage Door Controller (Cover)
 switch:
