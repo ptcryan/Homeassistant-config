@@ -181,7 +181,6 @@ switch:
     payload_off: "0"
     optimistic: false
     qos: 1
-    retain: true
     icon: mdi:remote
   - platform: mqtt
     name: "Right Garage Door"
@@ -191,7 +190,6 @@ switch:
     payload_off: "0"
     optimistic: false
     qos: 1
-    retain: true
     icon: mdi:remote
 
 light:
