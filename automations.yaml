@@ -1,0 +1,112 @@
+#############################
+#       Automations         #
+#############################
+
+- id: pwr_off_tv_hub
+  alias: "Power off the Television (HUB)"
+  trigger:
+    - platform: state
+      entity_id: remote.living_room_tv
+  condition:
+    - condition: template
+      value_template: '{{ trigger.to_state.attributes.current_activity == "PowerOff" }}'
+  action:
+    - service: input_select.select_option
+      entity_id: input_select.living_room_tv
+      data:
+        option: 'PowerOff'
+- id: watch_fire_tv_surr_hub
+  alias: "Watch Fire TV with Surround Sound (HUB)"
+  trigger:
+    - platform: state
+      entity_id: remote.living_room_tv
+  condition:
+    - condition: template
+      value_template: '{{ trigger.to_state.attributes.current_activity == "FIRE TV WITH SURROUND" }}'
+  action:
+    - service: input_select.select_option
+      entity_id: input_select.living_room_tv
+      data:
+        option: 'FIRE TV WITH SURROUND'
+- id: watch_fire_tv_hub
+  alias: "Watch Fire TV (HUB)"
+  trigger:
+    - platform: state
+      entity_id: remote.living_room_tv
+  condition:
+    - condition: template
+      value_template: '{{ trigger.to_state.attributes.current_activity == "WATCH FIRE TV" }}'
+  action:
+    - service: input_select.select_option
+      entity_id: input_select.living_room_tv
+      data:
+        option: 'WATCH FIRE TV'
+- id: watch_bcast_tv_hub
+  alias: "Watch Broadcast TV (HUB)"
+  trigger:
+    - platform: state
+      entity_id: remote.living_room_tv
+  condition:
+    - condition: template
+      value_template: '{{ trigger.to_state.attributes.current_activity == "WATCH TV" }}'
+  action:
+    - service: input_select.select_option
+      entity_id: input_select.living_room_tv
+      data:
+        option: 'WATCH TV'
+- id: pwr_off_tv_ha
+  alias: "Power off the Television (HA)"
+  trigger:
+    - platform: state
+      entity_id: input_select.living_room_tv
+      to: 'PowerOff'
+  action:
+    - service: script.turn_off
+      entity_id: script.tvoff
+- id: watch_fire_tv_surr_ha
+  alias: "Watch Fire TV with Surround Sound (HA)"
+  trigger:
+    - platform: state
+      entity_id: input_select.living_room_tv
+      to: 'FIRE TV WITH SURROUND'
+  action:
+    - service: script.turn_on
+      entity_id: script.firetvsurround
+- id: watch_fire_tv_ha
+  alias: "Watch Fire TV (HA)"
+  trigger:
+    - platform: state
+      entity_id: input_select.living_room_tv
+      to: 'WATCH FIRE TV'
+  action:
+    - service: script.turn_on
+      entity_id: script.firetv
+- id: watch_bcast_tv_ha
+  alias: "Watch Broadcast TV (HA)"
+  trigger:
+    - platform: state
+      entity_id: input_select.living_room_tv
+      to: 'WATCH TV'
+  action:
+    - service: script.turn_on
+      entity_id: script.broadcasttv
+- id: turn_on_desk_light_with_movement
+  alias: Turn on desk light when there is movement
+  trigger:
+    - platform: state
+      entity_id: sensor.movement
+      to: '1'
+  action:
+    - service: homeassistant.turn_on
+      entity_id: light.desk_lamp
+- id: turn_off_desk_light_no_movement
+  alias: Turn off desk light 10 minutes after last movement
+  trigger:
+    - platform: state
+      entity_id: sensor.movement
+      to: '0'
+      for:
+        minutes: 10
+  action:
+    - service: homeassistant.turn_off
+      entity_id: light.desk_lamp
