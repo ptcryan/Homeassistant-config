@@ -98,7 +98,7 @@
       to: '1'
   action:
     - service: homeassistant.turn_on
-      entity_id: light.desk_lamp
+      entity_id: light.hue_white_lamp_7
 - id: turn_off_desk_light_no_movement
   alias: Turn off desk light 10 minutes after last movement
   trigger:
@@ -109,4 +109,36 @@
         minutes: 10
   action:
     - service: homeassistant.turn_off
-      entity_id: light.desk_lamp
+      entity_id: light.hue_white_lamp_7
+- id: front_door_night_light_on
+  alias: Turn on front door light at night
+  trigger:
+    - platform: sun
+      event: sunset
+  action:
+    service: homassistant.turn_on
+    entity_id: light.hue_white_lamp_5
+- id: front_door_night_light_off
+  alias: Turn off front door light in the morning
+  trigger:
+    - platform: sun
+      event: sunrise
+  action:
+    service: homeassistant.turn_off
+    entity_id: light.hue_white_lamp_5
+- id: back_door_night_light_on
+  alias: Turn on back door light at night
+  trigger:
+    - platform: sun
+      event: sunset
+  action:
+    service: homassistant.turn_on
+    entity_id: light.hue_white_lamp_6
+- id: back_door_night_light_off
+  alias: Turn off back door light in the morning
+  trigger:
+    - platform: sun
+      event: sunrise
+  action:
+    service: homeassistant.turn_off
+    entity_id: light.hue_white_lamp_6
