@@ -199,27 +199,6 @@ light:
     command_topic: "hass/lamp2/switch"
     optimistic: false
 
-zone:
-  name: !secret zone_0_name
-  latitude: !secret zone_0_lat
-  longitude: !secret zone_0_lon
-  radius: 150
-  icon: !secret zone_0_icon
-
-zone 2:
-  name: !secret zone_2_name
-  latitude: !secret zone_2_lat
-  longitude: !secret zone_2_lon
-  radius: 175
-  icon: !secret zone_2_icon
-
-zone 3:
-  name: !secret zone_3_name
-  latitude: !secret zone_3_lat
-  longitude: !secret zone_3_lon
-  radius: 200
-  icon: !secret zone_3_icon
-
 ecobee:
   api_key: !secret ecobee_api_key
 
@@ -272,3 +251,4 @@ script:
 #         Includes          #
 #############################
 automation: !include automations.yaml
+zone: !include_dir_list zones/
