@@ -1,0 +1,5 @@
+name: !secret zone_0_name
+latitude: !secret zone_0_lat
+longitude: !secret zone_0_lon
+radius: 150
+icon: !secret zone_0_icon
