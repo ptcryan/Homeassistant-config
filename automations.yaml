@@ -142,3 +142,27 @@
   action:
     service: homeassistant.turn_off
     entity_id: light.hue_white_lamp_6
+- id: Movement_in_room_lights_on
+  alias: Turn on light when movement detected
+  trigger:
+    - platform: state
+      entity_id: binary_sensor.ecolink_motion_detector_sensor
+      to: 'on'
+  action:
+      service: homeassistant.turn_on
+      entity_id:
+        - switch.wemo_insight
+        - light.living_room_fan_lights
+- id: Movement_in_room_lights_off
+  alias: Turn off light when no movement
+  trigger:
+    - platform: state
+      entity_id: binary_sensor.ecolink_motion_detector_sensor
+      to: 'off'
+      for:
+        minutes: 30
+  action:
+      service: homeassistant.turn_off
+      entity_id:
+        - switch.wemo_insight
+        - light.living_room_fan_lights
