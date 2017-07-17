@@ -2,6 +2,12 @@
 #       Automations         #
 #############################
 
+################################################################################
+# This section contains automations for the Harmony hub and controlling        #
+# the entertainment system                                                     #
+################################################################################
+
+# Turn off the entertainment system via the Harmony hub
 - id: pwr_off_tv_hub
   alias: "Power off the Television (HUB)"
   trigger:
@@ -15,6 +21,8 @@
       entity_id: input_select.living_room_tv
       data:
         option: 'PowerOff'
+
+# Turn on the entertainment system via the Harmony hub
 - id: watch_fire_tv_surr_hub
   alias: "Watch Fire TV with Surround Sound (HUB)"
   trigger:
@@ -28,6 +36,8 @@
       entity_id: input_select.living_room_tv
       data:
         option: 'FIRE TV WITH SURROUND'
+
+# Turn on the entertainment system via the Harmony hub
 - id: watch_fire_tv_hub
   alias: "Watch Fire TV (HUB)"
   trigger:
@@ -41,6 +51,8 @@
       entity_id: input_select.living_room_tv
       data:
         option: 'WATCH FIRE TV'
+
+# Turn on the entertainment system via the Harmony hub
 - id: watch_bcast_tv_hub
   alias: "Watch Broadcast TV (HUB)"
   trigger:
@@ -54,6 +66,8 @@
       entity_id: input_select.living_room_tv
       data:
         option: 'WATCH TV'
+
+# Turn off the entertainment system via Homeassistant
 - id: pwr_off_tv_ha
   alias: "Power off the Television (HA)"
   trigger:
@@ -63,6 +77,8 @@
   action:
     - service: script.turn_off
       entity_id: script.tvoff
+
+# Turn on the entertainment system via Homeassistant
 - id: watch_fire_tv_surr_ha
   alias: "Watch Fire TV with Surround Sound (HA)"
   trigger:
@@ -72,6 +88,8 @@
   action:
     - service: script.turn_on
       entity_id: script.firetvsurround
+
+# Turn on the entertainment system via Homeassistant
 - id: watch_fire_tv_ha
   alias: "Watch Fire TV (HA)"
   trigger:
@@ -81,6 +99,8 @@
   action:
     - service: script.turn_on
       entity_id: script.firetv
+
+# Turn on the entertainment system via Homeassistant
 - id: watch_bcast_tv_ha
   alias: "Watch Broadcast TV (HA)"
   trigger:
@@ -90,6 +110,12 @@
   action:
     - service: script.turn_on
       entity_id: script.broadcasttv
+
+################################################################################
+# This section contains automations for controlling my desk lamp               #
+################################################################################
+
+# Turn on the desk lamp when movement is detected
 - id: turn_on_desk_light_with_movement
   alias: Turn on desk light when there is movement
   trigger:
@@ -99,6 +125,8 @@
   action:
     - service: homeassistant.turn_on
       entity_id: light.hue_white_lamp_7
+
+# Turn off the desk lamp when there's no movement
 - id: turn_off_desk_light_no_movement
   alias: Turn off desk light 10 minutes after last movement
   trigger:
@@ -110,59 +138,83 @@
   action:
     - service: homeassistant.turn_off
       entity_id: light.hue_white_lamp_7
+
+################################################################################
+# This section contains automations for controlling the porch lights based     #
+# on the Sun component. On at night, off in the morning.                       #
+################################################################################
+
+# Turn on the front door light at night
 - id: front_door_night_light_on
   alias: Turn on front door light at night
   trigger:
-    - platform: sun
-      event: sunset
+    platform: sun
+    event: sunset
+    offset: '-00:45:00'
   action:
-    service: homassistant.turn_on
-    entity_id: light.hue_white_lamp_5
+    service: homeassistant.turn_on
+    entity_id: light.front_door
+
+# Turn off the front door light in the morning
 - id: front_door_night_light_off
   alias: Turn off front door light in the morning
   trigger:
-    - platform: sun
-      event: sunrise
+    platform: sun
+    event: sunrise
   action:
     service: homeassistant.turn_off
-    entity_id: light.hue_white_lamp_5
+    entity_id: light.front_door
+
+# Turn on the back door light at night
 - id: back_door_night_light_on
   alias: Turn on back door light at night
   trigger:
-    - platform: sun
-      event: sunset
+    platform: sun
+    event: sunset
+    offset: '-00:45:00'
   action:
-    service: homassistant.turn_on
-    entity_id: light.hue_white_lamp_6
+    service: homeassistant.turn_on
+    entity_id: light.back_door
+
+# turn off the back door light in the morning
 - id: back_door_night_light_off
   alias: Turn off back door light in the morning
   trigger:
-    - platform: sun
-      event: sunrise
+    platform: sun
+    event: sunrise
   action:
     service: homeassistant.turn_off
-    entity_id: light.hue_white_lamp_6
+    entity_id: light.back_door
+
+################################################################################
+# This section contains automations for controlling kitchen and living room    #
+# lights based on movement detection.                                          #
+################################################################################
+
+# Turn on the kitchen and living room lights when movement is detected
 - id: Movement_in_room_lights_on
   alias: Turn on light when movement detected
   trigger:
-    - platform: state
-      entity_id: binary_sensor.ecolink_motion_detector_sensor
-      to: 'on'
+    platform: state
+    entity_id: binary_sensor.ecolink_motion_detector_sensor
+    to: 'on'
   action:
-      service: homeassistant.turn_on
-      entity_id:
-        - switch.wemo_insight
-        - light.living_room_fan_lights
+    service: homeassistant.turn_on
+    entity_id:
+      - switch.wemo_insight
+      - light.living_room_fan_lights
+
+# Turn off the kitchen and living room lights when movement is not detected for 30 min
 - id: Movement_in_room_lights_off
   alias: Turn off light when no movement
   trigger:
-    - platform: state
-      entity_id: binary_sensor.ecolink_motion_detector_sensor
-      to: 'off'
-      for:
-        minutes: 30
+    platform: state
+    entity_id: binary_sensor.ecolink_motion_detector_sensor
+    to: 'off'
+    for:
+      minutes: 30
   action:
-      service: homeassistant.turn_off
-      entity_id:
-        - switch.wemo_insight
-        - light.living_room_fan_lights
+    service: homeassistant.turn_off
+    entity_id:
+      - switch.wemo_insight
+      - light.living_room_fan_lights
