@@ -212,9 +212,116 @@
     entity_id: binary_sensor.ecolink_motion_detector_sensor
     to: 'off'
     for:
-      minutes: 30
+      minutes: 10
   action:
     service: homeassistant.turn_off
     entity_id:
       - switch.wemo_insight
       - light.living_room_fan_lights
+
+################################################################################
+# Automations for reporting status of garage door sensors over MQTT            #
+################################################################################
+
+- id: right_garage_door_sensor_report
+  alias: Report status of right garage door
+  trigger:
+    platform: state
+    entity_id: binary_sensor.ecolink_garage_door_tilt_sensor_sensor
+  action:
+    service: mqtt.publish
+    data:
+      topic: "home/right_door/status"
+      payload_template: '{{ states ("binary_sensor.ecolink_garage_door_tilt_sensor_sensor") }}'
+
+- id: left_garage_door_sensor_report
+  alias: Report status of left garage door
+  trigger:
+    platform: state
+    entity_id: binary_sensor.ecolink_garage_door_tilt_sensor_sensor_2
+  action:
+    service: mqtt.publish
+    data:
+      topic: "home/left_door/status"
+      payload_template: '{{ states ("binary_sensor.ecolink_garage_door_tilt_sensor_sensor_2") }}'
+
+################################################################################
+# Automations for reporting status of lights over MQTT                         #
+################################################################################
+
+- id: wemo_switch_mqtt_status_off
+  alias: Wemo switch mqtt status off
+  trigger:
+    platform: state
+    to: 'off'
+    entity_id: switch.wemo_insight
+  action:
+    service: mqtt.publish
+    data:
+      topic: "home/kitchen/wemo/status"
+#      payload_template: '{{ states ("switch.wemo_insight") }}'
+      payload: 'off'
+
+- id: wemo_switch_mqtt_status_on
+  alias: Wemo switch mqtt status on
+  trigger:
+    platform: state
+    to: 'on'
+    entity_id: switch.wemo_insight
+  action:
+    service: mqtt.publish
+    data:
+      topic: "home/kitchen/wemo/status"
+#      payload_template: '{{ states ("switch.wemo_insight") }}'
+      payload: 'on'
+
+- id: wemo_switch_mqtt_control
+  alias: Wemo switch mqtt control
+  trigger:
+    platform: mqtt
+    topic: "home/kitchen/wemo/set"
+  action:
+    service_template: 'homeassistant.turn_{{ trigger.payload }}'
+    entity_id: switch.wemo_insight
+
+- id: computer_desk_lamp_mqtt_status
+  alias: Computer desk lamp mqtt status
+  trigger:
+    platform: state
+    entity_id: light.hue_white_lamp_7
+  action:
+    service: mqtt.publish
+    data:
+      topic: "home/desk/status"
+      payload_template: '{{ states ("light.hue_white_lamp_7") }}'
+
+- id: computer_desk_lamp_mqtt_control
+  alias: Computer desk lamp mqtt control
+  trigger:
+    platform: mqtt
+    topic: "home/desk/set"
+  action:
+    service_template: 'homeassistant.turn_{{ trigger.payload }}'
+    entity_id: light.hue_white_lamp_7
+
+- id: computer_desk_lamp_mqtt_brightness_status
+  alias: Computer desk lamp mqtt brightness status
+  trigger:
+    platform: state
+    entity_id: light.hue_white_lamp_7
+  action:
+    service: mqtt.publish
+    data:
+      topic: "home/desk/bright/status"
+      payload_template: '{{ states.light.hue_white_lamp_7.attributes.brightness }}'
+
+- id: computer_desk_lamp_mqtt_brightness_control
+  alias: Computer desk lamp mqtt brightness control
+  trigger:
+    platform: mqtt
+    topic: "home/desk/bright/set"
+  action:
+    service: light.turn_on
+    entity_id: light.hue_white_lamp_7
+    data_template:
+      brightness: '{{ trigger.payload }}'
