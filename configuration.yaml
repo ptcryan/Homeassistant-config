@@ -40,6 +40,13 @@ config:
 
 # Enables the frontend
 frontend:
+  themes:
+    happy:
+      primary-color: green
+    sad:
+      primary-color: blue
+    night:
+      primary-color: darkred
 
 # Database controls
 recorder:
