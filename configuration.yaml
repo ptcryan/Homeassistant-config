@@ -10,15 +10,8 @@ homeassistant:
   unit_system: imperial
   # Pick yours from here: http://en.wikipedia.org/wiki/List_of_tz_database_time_zones
   time_zone: America/New_York
-
-  customize:
-    switch.left_garage_door:
-      icon: mdi:remote
-    switch.right_garage_door:
-      icon: mdi:remote
-    switch.wemo_insight:
-      icon: mdi:lightbulb
-      friendly_name: Sink Lights
+  # Include customizations
+  customize: !include customize.yaml
 
 # Enable the iOS app
 ios:
