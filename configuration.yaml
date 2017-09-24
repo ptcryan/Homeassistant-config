@@ -168,6 +168,9 @@ tts:
 mqtt:
   client_id: HA_Server_6b7359
 
+mqtt_statestream:
+  base_topic: homeassistant
+
 # Configuration for an MQTT Garage Door Controller (Cover)
 switch:
   - platform: mqtt
