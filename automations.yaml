@@ -292,14 +292,14 @@
   action:
     service: mqtt.publish
     data:
-      topic: "home/desk/status"
+      topic: "home/main_floor/den/desk_lamp/status"
       payload_template: '{{ states ("light.hue_white_lamp_7") }}'
 
 - id: computer_desk_lamp_mqtt_control
   alias: Computer desk lamp mqtt control
   trigger:
     platform: mqtt
-    topic: "home/desk/set"
+    topic: "home/main_floor/den/desk_lamp/set"
   action:
     service_template: 'homeassistant.turn_{{ trigger.payload }}'
     entity_id: light.hue_white_lamp_7
@@ -312,14 +312,14 @@
   action:
     service: mqtt.publish
     data:
-      topic: "home/desk/bright/status"
+      topic: "home/main_floor/den/desk_lamp/bright/status"
       payload_template: '{{ states.light.hue_white_lamp_7.attributes.brightness }}'
 
 - id: computer_desk_lamp_mqtt_brightness_control
   alias: Computer desk lamp mqtt brightness control
   trigger:
     platform: mqtt
-    topic: "home/desk/bright/set"
+    topic: "home/main_floor/den/desk_lamp/bright/set"
   action:
     service: light.turn_on
     entity_id: light.hue_white_lamp_7
