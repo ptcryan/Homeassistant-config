@@ -249,6 +249,7 @@
 # Automations for reporting status of lights over MQTT                         #
 ################################################################################
 
+#---- Sink Lights --------------------------------------------------------------
 - id: wemo_switch_mqtt_status_off
   alias: Wemo switch mqtt status off
   trigger:
@@ -258,8 +259,7 @@
   action:
     service: mqtt.publish
     data:
-      topic: "home/kitchen/wemo/status"
-#      payload_template: '{{ states ("switch.wemo_insight") }}'
+      topic: "home/main_floor/kitchen/sink_lights/status"
       payload: 'off'
 
 - id: wemo_switch_mqtt_status_on
@@ -271,19 +271,19 @@
   action:
     service: mqtt.publish
     data:
-      topic: "home/kitchen/wemo/status"
-#      payload_template: '{{ states ("switch.wemo_insight") }}'
+      topic: "home/main_floor/kitchen/sink_lights/status"
       payload: 'on'
 
 - id: wemo_switch_mqtt_control
   alias: Wemo switch mqtt control
   trigger:
     platform: mqtt
-    topic: "home/kitchen/wemo/set"
+    topic: "home/main_floor/kitchen/sink_lights/set"
   action:
     service_template: 'homeassistant.turn_{{ trigger.payload }}'
     entity_id: switch.wemo_insight
 
+#---- Desk Lamp ----------------------------------------------------------------
 - id: computer_desk_lamp_mqtt_status
   alias: Computer desk lamp mqtt status
   trigger:
@@ -323,5 +323,177 @@
   action:
     service: light.turn_on
     entity_id: light.hue_white_lamp_7
+    data_template:
+      brightness: '{{ trigger.payload }}'
+
+#---- Den lights ---------------------------------------------------------------
+- id: den_lights_mqtt_status
+  alias: Den lights mqtt status
+  trigger:
+    platform: state
+    entity_id: light.computer_room
+  action:
+    service: mqtt.publish
+    data:
+      topic: "home/main_floor/den/overhead_lights/status"
+      payload_template: '{{ states ("light.computer_room") }}'
+
+- id: den_lights_lamp_mqtt_control
+  alias: Den lights mqtt control
+  trigger:
+    platform: mqtt
+    topic: "home/main_floor/den/overhead_lights/set"
+  action:
+    service_template: 'homeassistant.turn_{{ trigger.payload }}'
+    entity_id: light.computer_room
+
+- id: den_lights_mqtt_brightness_status
+  alias: Den lights mqtt brightness status
+  trigger:
+    platform: state
+    entity_id: light.computer_room
+  action:
+    service: mqtt.publish
+    data:
+      topic: "home/main_floor/den/overhead_lights/bright/status"
+      payload_template: '{{ states.light.computer_room.attributes.brightness }}'
+
+- id: den_lights_mqtt_brightness_control
+  alias: Den lights mqtt brightness control
+  trigger:
+    platform: mqtt
+    topic: "home/main_floor/den/overhead_lights/bright/set"
+  action:
+    service: light.turn_on
+    entity_id: light.computer_room
+    data_template:
+      brightness: '{{ trigger.payload }}'
+
+#---- Dining Room lights -------------------------------------------------------
+- id: dining_room_lights_mqtt_status
+  alias: Dining room lights mqtt status
+  trigger:
+    platform: state
+    entity_id: light.dining_room_light
+  action:
+    service: mqtt.publish
+    data:
+      topic: "home/main_floor/dining_room/overhead_lights/status"
+      payload_template: '{{ states ("light.dining_room_light") }}'
+
+- id: dining_room_lights_lamp_mqtt_control
+  alias: Dining room lights mqtt control
+  trigger:
+    platform: mqtt
+    topic: "home/main_floor/dining_room/overhead_lights/set"
+  action:
+    service_template: 'homeassistant.turn_{{ trigger.payload }}'
+    entity_id: light.dining_room_light
+
+- id: dining_room_lights_mqtt_brightness_status
+  alias: Dining room lights mqtt brightness status
+  trigger:
+    platform: state
+    entity_id: light.dining_room_light
+  action:
+    service: mqtt.publish
+    data:
+      topic: "home/main_floor/dining_room/overhead_lights/bright/status"
+      payload_template: '{{ states.light.dining_room_light.attributes.brightness }}'
+
+- id: dining_room_lights_mqtt_brightness_control
+  alias: Dining room lights mqtt brightness control
+  trigger:
+    platform: mqtt
+    topic: "home/main_floor/dining_room/overhead_lights/bright/set"
+  action:
+    service: light.turn_on
+    entity_id: light.dining_room_light
+    data_template:
+      brightness: '{{ trigger.payload }}'
+
+#---- Living Room table lights -------------------------------------------------
+- id: living_room_table_lights_mqtt_status
+  alias: Living room table lights mqtt status
+  trigger:
+    platform: state
+    entity_id: light.living_room
+  action:
+    service: mqtt.publish
+    data:
+      topic: "home/main_floor/living_room/living_room/status"
+      payload_template: '{{ states ("light.living_room") }}'
+
+- id: living_room_table_lights_lamp_mqtt_control
+  alias: Living room table lights mqtt control
+  trigger:
+    platform: mqtt
+    topic: "home/main_floor/living_room/living_room/set"
+  action:
+    service_template: 'homeassistant.turn_{{ trigger.payload }}'
+    entity_id: light.living_room
+
+- id: living_room_table_lights_mqtt_brightness_status
+  alias: Living room table lights mqtt brightness status
+  trigger:
+    platform: state
+    entity_id: light.living_room
+  action:
+    service: mqtt.publish
+    data:
+      topic: "home/main_floor/living_room/living_room/bright/status"
+      payload_template: '{{ states.light.living_room.attributes.brightness }}'
+
+- id: living_room_table_lights_mqtt_brightness_control
+  alias: Living room table lights mqtt brightness control
+  trigger:
+    platform: mqtt
+    topic: "home/main_floor/living_room/living_room/bright/set"
+  action:
+    service: light.turn_on
+    entity_id: light.living_room
+    data_template:
+      brightness: '{{ trigger.payload }}'
+
+#---- Living Room fan lights ---------------------------------------------------
+- id: living_room_fan_lights_mqtt_status
+  alias: Living room fan lights mqtt status
+  trigger:
+    platform: state
+    entity_id: light.living_room_fan_lights
+  action:
+    service: mqtt.publish
+    data:
+      topic: "home/main_floor/living_room/living_room_fan_lights/status"
+      payload_template: '{{ states ("light.living_room_fan_lights") }}'
+
+- id: living_room_fan_lights_lamp_mqtt_control
+  alias: Living room fan lights mqtt control
+  trigger:
+    platform: mqtt
+    topic: "home/main_floor/living_room/living_room_fan_lights/set"
+  action:
+    service_template: 'homeassistant.turn_{{ trigger.payload }}'
+    entity_id: light.living_room_fan_lights
+
+- id: living_room_fan_lights_mqtt_brightness_status
+  alias: Living room fan lights mqtt brightness status
+  trigger:
+    platform: state
+    entity_id: light.living_room_fan_lights
+  action:
+    service: mqtt.publish
+    data:
+      topic: "home/main_floor/living_room/living_room_fan_lights/bright/status"
+      payload_template: '{{ states.light.living_room_fan_lights.attributes.brightness }}'
+
+- id: living_room_fan_lights_mqtt_brightness_control
+  alias: Living room fan lights mqtt brightness control
+  trigger:
+    platform: mqtt
+    topic: "home/main_floor/living_room/living_room_fan_lights/bright/set"
+  action:
+    service: light.turn_on
+    entity_id: light.living_room_fan_lights
     data_template:
       brightness: '{{ trigger.payload }}'
