@@ -255,3 +255,4 @@ script:
 #############################
 automation: !include automations.yaml
 zone: !include_dir_list zones/
+# group: !include groups.yaml
