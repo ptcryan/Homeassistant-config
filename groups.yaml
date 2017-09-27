@@ -1,8 +1,15 @@
-default_view:
+weather_view:
   view: yes
+  name: Weather
   entities:
     - group.weather
     - group.home_environment
+
+garage_view:
+  view: yes
+  name: Garage
+  entities:
+    - group.garage_sensors
 
 Weather:
   - sensor.dark_sky_icon
@@ -16,3 +23,9 @@ Weather:
 
 Home Environment:
   - sensor.date__time
+
+Garage Sensors:
+  - binary_sensor.ecolink_garage_door_tilt_sensor_sensor
+  - binary_sensor.ecolink_garage_door_tilt_sensor_sensor_2
+  - switch.left_garage_door
+  - switch.right_garage_door
