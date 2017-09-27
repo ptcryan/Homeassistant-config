@@ -1,0 +1,18 @@
+default_view:
+  view: yes
+  entities:
+    - group.weather
+    - group.home_environment
+
+Weather:
+  - sensor.dark_sky_icon
+  - sensor.dark_sky_nearest_storm_distance
+  - sensor.dark_sky_summary
+  - sun.sun
+  - sensor.pws_alerts
+  - sensor.pws_precip_today_in
+  - sensor.pws_temp_f
+
+
+Home Environment:
+  - sensor.date__time
