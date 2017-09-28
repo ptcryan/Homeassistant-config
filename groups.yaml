@@ -11,6 +11,15 @@ garage_view:
   entities:
     - group.garage_sensors
 
+motion_view:
+  view: yes
+  name: Motion
+  entities:
+    - group.movement_sensors
+    - group.all_automations
+
+#---- Groups -------------------------------------------------------------------
+
 Weather:
   - sensor.dark_sky_icon
   - sensor.dark_sky_nearest_storm_distance
@@ -29,3 +38,12 @@ Garage Sensors:
   - binary_sensor.ecolink_garage_door_tilt_sensor_sensor_2
   - switch.left_garage_door
   - switch.right_garage_door
+
+Movement Sensors:
+  - binary_sensor.downstairs_occupancy
+  - binary_sensor.front_room_occupancy
+  - binary_sensor.living_room_occupancy
+  - binary_sensor.ecolink_motion_detector_sensor
+  - binary_sensor.upstairs_occupancy
+  - binary_sensor.guest_room_occupancy
+  - binary_sensor.master_bedroom_occupancy
