@@ -18,6 +18,37 @@ motion_view:
     - group.movement_sensors
     - group.all_automations
 
+phone_sensors:
+  view: yes
+  name: Phones
+  entities:
+    - group.phone_status
+    - group.phone_location
+
+computer_ststus:
+  view: yes
+  name: Computer Status
+  entities:
+    - group.computer_sensors
+
+Temperature:
+  view: yes
+  name: Home Temperature
+  entities:
+    - group.temperatures
+
+Doorbell_sensor:
+  view: yes
+  name: Doorbell
+  entities:
+    - group.doorbell
+
+hidden:
+  view: no
+  name: Hidden Entities
+  entities:
+    - group.hidden
+
 #---- Groups -------------------------------------------------------------------
 
 Weather:
@@ -36,6 +67,8 @@ Home Environment:
 Garage Sensors:
   - binary_sensor.ecolink_garage_door_tilt_sensor_sensor
   - binary_sensor.ecolink_garage_door_tilt_sensor_sensor_2
+  - sensor.garage_door_sensor_1
+  - sensor.garage_door_sensor_2
   - switch.left_garage_door
   - switch.right_garage_door
 
@@ -47,3 +80,71 @@ Movement Sensors:
   - binary_sensor.upstairs_occupancy
   - binary_sensor.guest_room_occupancy
   - binary_sensor.master_bedroom_occupancy
+
+Phone Status:
+  - sensor.saturn_battery_level
+  - sensor.saturn_battery_state
+  - sensor.lynnettes_iphone_battery_level
+  - sensor.lynnettes_iphone_battery_state
+  - sensor.jacksons_iphone_battery_level
+  - sensor.jacksons_iphone_battery_state
+  - sensor.elizabeths_iphone_battery_level
+  - sensor.elizabeths_iphone_battery_state
+  - sensor.elizabeths_iphone_battery_level_2
+  - sensor.elizabeths_iphone_battery_state_2
+
+Phone Location:
+  - device_tracker.david
+  - device_tracker.elizabeth
+  - device_tracker.elizabeths_iphone
+  - device_tracker.jacksons_iphone
+  - device_tracker.lynnettes_iphone
+
+Computer Sensors:
+  - sensor.disk_use_
+  - sensor.cpu_use
+  - sensor.last_boot
+  - sensor.ram_use
+  - sensor.speedtest_download
+  - sensor.speedtest_ping
+  - sensor.speedtest_upload
+
+Hidden:
+  - sensor.ecolink_garage_door_tilt_sensor_access_control
+  - sensor.ecolink_garage_door_tilt_sensor_access_control_2
+  - sensor.ecolink_garage_door_tilt_sensor_alarm_level
+  - sensor.ecolink_garage_door_tilt_sensor_alarm_level_2
+  - sensor.ecolink_garage_door_tilt_sensor_alarm_type
+  - sensor.ecolink_garage_door_tilt_sensor_alarm_type_2
+  - sensor.ecolink_garage_door_tilt_sensor_burglar
+  - sensor.ecolink_garage_door_tilt_sensor_burglar_2
+  - sensor.ecolink_garage_door_tilt_sensor_power_management
+  - sensor.ecolink_garage_door_tilt_sensor_power_management_2
+  - sensor.ecolink_garage_door_tilt_sensor_sourcenodeid
+  - sensor.ecolink_garage_door_tilt_sensor_sourcenodeid_2
+  - sensor.ecolink_motion_detector_alarm_level
+  - sensor.ecolink_motion_detector_alarm_type
+  - sensor.ecolink_motion_detector_burglar
+  - sensor.ecolink_motion_detector_power_management
+  - sensor.ecolink_motion_detector_sourcenodeid
+
+Temperatures:
+  - sensor.downstairs_humidity
+  - sensor.downstairs_temperature
+  - sensor.living_room_temperature
+  - sensor.front_room_temperature
+  - sensor.upstairs_humidity
+  - sensor.upstairs_temperature
+  - sensor.guest_room_temperature
+  - sensor.master_bedroom_temperature
+  - sensor.humidity
+  - sensor.temperature
+
+Doorbell:
+  - binary_sensor.ring_front_door_ding
+  - binary_sensor.ring_front_door_motion
+  - sensor.ring_front_door_battery
+  - sensor.ring_front_door_last_activity
+  - sensor.ring_front_door_last_ding
+  - sensor.ring_front_door_last_motion
+  - sensor.ring_front_door_volume
