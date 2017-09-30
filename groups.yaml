@@ -80,6 +80,7 @@ Movement Sensors:
   - binary_sensor.upstairs_occupancy
   - binary_sensor.guest_room_occupancy
   - binary_sensor.master_bedroom_occupancy
+  - sensor.movement
 
 Phone Status:
   - sensor.saturn_battery_level
