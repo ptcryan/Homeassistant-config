@@ -88,6 +88,20 @@ sensor:
       - alerts
       - precip_today_in
       - temp_f
+      - pressure_in
+      - heat_index_f
+      - dewpoint_f
+      - wind_dir
+      - wind_mph
+      - weather_1d_metric
+      - weather_1n_metric
+      - weather_2d_metric
+      - weather_2n_metric
+      - weather_3d_metric
+      - weather_3n_metric
+      - weather_4d_metric
+      - weather_4n_metric
+    pws_id: !secret pws
   - platform: systemmonitor
     resources:
       - type: disk_use_percent
