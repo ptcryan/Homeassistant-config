@@ -87,7 +87,6 @@ sensor:
     monitored_conditions:
       - temp_f
       - pressure_in
-      - heat_index_f
       - dewpoint_f
       - weather_1d
       - weather_1n
