@@ -89,8 +89,6 @@ Home Environment:
   - sensor.date__time
 
 Garage Sensors:
-  - binary_sensor.ecolink_garage_door_tilt_sensor_sensor
-  - binary_sensor.ecolink_garage_door_tilt_sensor_sensor_2
   - sensor.garage_door_sensor_1
   - sensor.garage_door_sensor_2
   - switch.left_garage_door
@@ -152,6 +150,8 @@ Hidden:
   - sensor.ecolink_motion_detector_burglar
   - sensor.ecolink_motion_detector_power_management
   - sensor.ecolink_motion_detector_sourcenodeid
+  - binary_sensor.ecolink_garage_door_tilt_sensor_sensor
+  - binary_sensor.ecolink_garage_door_tilt_sensor_sensor_2
 
 Temperatures:
   - sensor.downstairs_humidity
