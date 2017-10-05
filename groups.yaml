@@ -45,6 +45,12 @@ Doorbell_sensor:
   entities:
     - group.doorbell
 
+Lightbulb_group:
+  view: yes
+  name: Lights
+  entities:
+    - group.lightbulbs
+
 hidden:
   view: no
   name: Hidden Entities
@@ -171,3 +177,24 @@ Doorbell:
   - sensor.ring_front_door_last_ding
   - sensor.ring_front_door_last_motion
   - sensor.ring_front_door_volume
+
+Lightbulbs:
+  - light.all_hue_lights
+  - light.back_door
+  - light.computer_desk
+  - light.computer_room
+  - light.dining_room_light
+  - light.front_door
+  - light.hue_color_lamp_1
+  - light.hue_color_lamp_2
+  - light.hue_color_lamp_3
+  - light.hue_white_lamp_1
+  - light.hue_white_lamp_2
+  - light.hue_white_lamp_3
+  - light.hue_white_lamp_4
+  - light.hue_white_lamp_5
+  - light.hue_white_lamp_6
+  - light.hue_white_lamp_7
+  - light.living_room
+  - light.living_room_fan_lights
+  - light.node_light

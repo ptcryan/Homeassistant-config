@@ -7,3 +7,4 @@
     friendly_name: Sink Lights
   light.node_light:
     icon: mdi:atom
+    friendly_name: Test Lamp
