@@ -43,8 +43,10 @@ frontend:
 
 # Database controls
 recorder:
-  db_url: postgres://@/homeassistant
-  purge_days: 8
+# Uncomment next line to use PostgreSQL
+#  db_url: postgres://@/homeassistant
+  purge_interval: 2
+  purge_keep_days: 14
 
 http:
   # Uncomment this to add a password (recommended!)
@@ -265,6 +267,14 @@ script:
         entity_id: remote.living_room_tv
         data:
           activity: 12104283
+
+history_graph:
+  gr1:
+    name: PWS History
+    entities:
+      - sensor.pws_temp_f
+      - sensor.pws_pressure_in
+
 
 #############################
 #         Includes          #

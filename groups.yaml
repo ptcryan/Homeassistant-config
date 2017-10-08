@@ -6,6 +6,7 @@ weather_view:
     - group.personal_weather_station
     - group.home_environment
     - group.forecast
+    - history_graph.pws_history
 
 garage_view:
   view: yes
@@ -119,6 +120,8 @@ Phone Status:
   - sensor.jacksons_iphone_battery_state
   - sensor.elizabeths_iphone_battery_level
   - sensor.elizabeths_iphone_battery_state
+  - sensor.elizabeths_iphone_battery_level_2
+  - sensor.elizabeths_iphone_battery_state_2
 
 Phone Location:
   - device_tracker.david
