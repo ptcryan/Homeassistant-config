@@ -1,3 +1,19 @@
+default_view:
+  view: yes
+  icon: mdi:home
+  entities:
+    - group.all_lights
+    - group.family_room
+    - group.kitchen
+    - group.computer_room
+    - group.porches
+
+Lightbulb_group:
+  view: yes
+  name: Lights
+  entities:
+    - group.lightbulbs
+
 weather_view:
   view: yes
   name: Weather
@@ -46,12 +62,6 @@ Doorbell_sensor:
   entities:
     - group.doorbell
 
-Lightbulb_group:
-  view: yes
-  name: Lights
-  entities:
-    - group.lightbulbs
-
 hidden:
   view: no
   name: Hidden Entities
@@ -59,6 +69,22 @@ hidden:
     - group.hidden
 
 #---- Groups -------------------------------------------------------------------
+
+Family Room:
+  - light.living_room
+  - light.living_room_fan_lights
+
+Kitchen:
+  - light.dining_room_light
+  - switch.wemo_insight
+
+Computer Room:
+  - light.computer_room
+  - light.computer_desk
+
+Porches:
+  - light.front_door
+  - light.back_door
 
 Weather:
   - sensor.dark_sky_summary
