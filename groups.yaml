@@ -6,6 +6,9 @@ default_view:
     - group.family_room
     - group.kitchen
     - group.computer_room
+    - group.front_room
+    - group.guest_room
+    - group.master_bedroom
     - group.porches
 
 Lightbulb_group:
@@ -73,14 +76,39 @@ hidden:
 Family Room:
   - light.living_room
   - light.living_room_fan_lights
+  - binary_sensor.living_room_occupancy
+  - sensor.living_room_temperature
+  - sensor.downstairs_humidity
+
+Front Room:
+  - binary_sensor.front_room_occupancy
+  - sensor.downstairs_humidity
+  - sensor.front_room_temperature
 
 Kitchen:
   - light.dining_room_light
   - switch.wemo_insight
+  - binary_sensor.downstairs_occupancy
+  - binary_sensor.ecolink_motion_detector_sensor
+  - sensor.downstairs_temperature
+  - sensor.downstairs_humidity
 
 Computer Room:
   - light.computer_room
   - light.computer_desk
+  - sensor.movement
+  - sensor.temperature
+  - sensor.humidity
+
+Guest Room:
+  - binary_sensor.guest_room_occupancy
+  - sensor.guest_room_temperature
+  - sensor.upstairs_humidity
+
+Master Bedroom:
+  - binary_sensor.master_bedroom_occupancy
+  - sensor.master_bedroom_temperature
+  - sensor.upstairs_humidity
 
 Porches:
   - light.front_door
