@@ -150,7 +150,7 @@
   trigger:
     platform: sun
     event: sunset
-    offset: '-00:45:00'
+    # offset: '-00:45:00'
   action:
     service: homeassistant.turn_on
     entity_id: light.front_door
@@ -204,7 +204,7 @@
       - switch.wemo_insight
       - light.living_room_fan_lights
 
-# Turn off the kitchen and living room lights when movement is not detected for 30 min
+# Turn off the kitchen and living room lights when movement is not detected for 10 min
 - id: Movement_in_room_lights_off
   alias: Turn off light when no movement
   trigger:
@@ -244,6 +244,80 @@
     data:
       topic: "home/left_door/status"
       payload_template: '{{ states ("binary_sensor.ecolink_garage_door_tilt_sensor_sensor_2") }}'
+
+################################################################################
+# Automations for controlling garage lights with overhead door state           #
+################################################################################
+
+- id: garage_lights_on_with_left_door
+  alias: Turn garage lights on when left door opens
+  trigger:
+    platform: state
+    entity_id:
+      - sensor.garage_door_sensor_1
+    to: OPEN
+  action:
+    service: homeassistant.turn_on
+    entity_id: light.garage
+
+- id: garage_lights_on_with_right_door
+  alias: Turn garage lights on when right door opens
+  trigger:
+    platform: state
+    entity_id:
+      - sensor.garage_door_sensor_2
+    to: OPEN
+  action:
+    service: homeassistant.turn_on
+    entity_id: light.garage
+
+- id: garage_lights_off_with_left_door
+  alias: Turn garage lights off when left door closes
+  trigger:
+    platform: state
+    entity_id:
+      - sensor.garage_door_sensor_1
+    to: CLOSED
+  action:
+    service: homeassistant.turn_off
+    entity_id: light.garage
+
+- id: garage_lights_off_with_right_door
+  alias: Turn garage lights off when right door closes
+  trigger:
+    platform: state
+    entity_id:
+      - sensor.garage_door_sensor_2
+    to: CLOSED
+  action:
+    service: homeassistant.turn_off
+    entity_id: light.garage
+
+
+################################################################################
+# Automations for controlling pantry light                                     #
+################################################################################
+- id: pantry_light_off
+  alias: Pantry light off
+  trigger:
+    platform: state
+    to: closed
+    entity_id: sensor.pantry_door_sensor
+  action:
+    service: homeassistant.turn_off
+    entity_id:
+      - light.dining_room_light
+
+- id: pantry_light_on
+  alias: Pantry light on
+  trigger:
+    platform: state
+    to: open
+    entity_id: sensor.pantry_door_sensor
+  action:
+    service: homeassistant.turn_on
+    entity_id:
+      - light.dining_room_light
 
 ################################################################################
 # Automations for reporting status of lights over MQTT                         #

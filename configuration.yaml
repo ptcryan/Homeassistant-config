@@ -163,6 +163,12 @@ sensor:
         friendly_name: 'Right Garage Door'
         value_template: '{% if is_state("binary_sensor.ecolink_garage_door_tilt_sensor_sensor", "on") %}OPEN{% else %}CLOSED{% endif %}'
         icon_template: '{% if is_state("binary_sensor.ecolink_garage_door_tilt_sensor_sensor", "on") %}mdi:garage-open{% else %}mdi:garage{% endif %}'
+  - platform: template
+    sensors:
+      pantry_door_sensor:
+        friendly_name: 'Pantry Door'
+        value_template: '{% if states.sensor.ge_32563_hinge_pin_smart_door_sensor_access_control.state == "23" %}closed{% elif states.sensor.ge_32563_hinge_pin_smart_door_sensor_access_control.state == "22" %}open{% endif %}'
+        icon_template: '{% if states.sensor.ge_32563_hinge_pin_smart_door_sensor_access_control.state == "23" %}mdi:door{% elif states.sensor.ge_32563_hinge_pin_smart_door_sensor_access_control.state == "22" %}mdi:door-open{% endif %}'
 
 # adding Ring binary sensor. Not to be confused with Ring sensor.
 binary_sensor:
@@ -186,8 +192,8 @@ tts:
 mqtt:
   client_id: HA_Server_6b7359
 
-mqtt_statestream:
-  base_topic: homeassistant
+# mqtt_statestream:
+#   base_topic: homeassistant
 
 # Configuration for an MQTT Garage Door Controller (Cover)
 switch:

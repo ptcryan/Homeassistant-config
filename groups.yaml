@@ -92,6 +92,7 @@ Kitchen:
   - binary_sensor.ecolink_motion_detector_sensor
   - sensor.downstairs_temperature
   - sensor.downstairs_humidity
+  - sensor.pantry_door_sensor
 
 Computer Room:
   - light.computer_room
@@ -154,6 +155,7 @@ Garage Sensors:
   - sensor.garage_door_sensor_2
   - switch.left_garage_door
   - switch.right_garage_door
+  - light.garage
 
 Movement Sensors:
   - binary_sensor.downstairs_occupancy
@@ -252,6 +254,9 @@ Lightbulbs:
   - light.hue_white_lamp_5
   - light.hue_white_lamp_6
   - light.hue_white_lamp_7
+  - light.hue_white_lamp_8_garage
+  - light.hue_white_lamp_9_garage
   - light.living_room
   - light.living_room_fan_lights
   - light.node_light
+  - light.garage
