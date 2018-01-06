@@ -13,6 +13,10 @@ homeassistant:
   # Include customizations
   customize: !include customize.yaml
 
+# Enable cloud services
+cloud:
+config:
+
 # Enable the iOS app
 ios:
 
@@ -216,10 +220,11 @@ switch:
     qos: 1
     icon: mdi:remote
 
-light:
-  - platform: hue
-    host: !secret hue_ip
+hue:
+  bridges:
+    - host: !secret hue_ip
 
+light:
   - platform: mqtt
     name: "node light"
     state_topic: "hass/lamp2/status"
