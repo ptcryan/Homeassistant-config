@@ -55,6 +55,8 @@ recorder:
 http:
   # Uncomment this to add a password (recommended!)
   api_password: !secret http_password
+  ssl_certificate: !secret ssl_certificate
+  ssl_key: !secret ssl_key
   # Uncomment this if you are using SSL or running in Docker etc
   # base_url: example.duckdns.org:8123
   ip_ban_enabled: True
