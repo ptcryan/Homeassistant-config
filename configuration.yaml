@@ -220,9 +220,13 @@ switch:
     qos: 1
     icon: mdi:remote
 
+# Enable the hue bridge component
 hue:
   bridges:
     - host: !secret hue_ip
+
+# Enable the wemo component
+wemo:
 
 light:
   - platform: mqtt
