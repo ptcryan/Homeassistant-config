@@ -32,9 +32,6 @@ panel_iframe:
     icon: mdi:wrench
     url: !secret configurator_ip
 
-# Enable config panel
-config:
-
 # Enables the frontend
 frontend:
   themes:
@@ -50,7 +47,7 @@ recorder:
 # Uncomment next line to use PostgreSQL
 #  db_url: postgres://@/homeassistant
   purge_interval: 2
-  purge_keep_days: 14
+  purge_keep_days: 7
 
 http:
   # Uncomment this to add a password (recommended!)
