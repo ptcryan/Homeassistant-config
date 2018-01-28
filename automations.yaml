@@ -304,9 +304,10 @@
     to: closed
     entity_id: sensor.pantry_door_sensor
   action:
-    service: homeassistant.turn_off
-    entity_id:
-      - light.dining_room_light
+    service: mqtt.publish
+    data:
+      topic: "home/main_floor/pantry/cmnd/sonoff_switch/POWER"
+      payload: "OFF"
 
 - id: pantry_light_on
   alias: Pantry light on
@@ -315,9 +316,10 @@
     to: open
     entity_id: sensor.pantry_door_sensor
   action:
-    service: homeassistant.turn_on
-    entity_id:
-      - light.dining_room_light
+    service: mqtt.publish
+    data:
+      topic: "home/main_floor/pantry/cmnd/sonoff_switch/POWER"
+      payload: "ON"
 
 ################################################################################
 # Automations for reporting status of lights over MQTT                         #

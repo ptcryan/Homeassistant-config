@@ -5,6 +5,7 @@ default_view:
     - group.all_lights
     - group.family_room
     - group.kitchen
+    - group.pantry
     - group.computer_room
     - group.front_room
     - group.guest_room
@@ -93,6 +94,9 @@ Kitchen:
   - sensor.downstairs_temperature
   - sensor.downstairs_humidity
   - sensor.pantry_door_sensor
+
+Pantry:
+  - light.pantry_light
 
 Computer Room:
   - light.computer_room
@@ -260,3 +264,4 @@ Lightbulbs:
   - light.living_room_fan_lights
   - light.node_light
   - light.garage
+  - light.pantry_light

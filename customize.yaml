@@ -8,3 +8,6 @@
   light.node_light:
     icon: mdi:atom
     friendly_name: Test Lamp
+  light.pantry_light:
+    icon: mdi:lightbulb
+    friendly_name: Pantry Light

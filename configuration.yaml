@@ -232,6 +232,17 @@ light:
     state_topic: "hass/lamp2/status"
     command_topic: "hass/lamp2/switch"
     optimistic: false
+  - platform: mqtt
+    name: "Pantry Light"
+    state_topic: "home/main_floor/pantry/stat/sonoff_switch/POWER"
+    command_topic: "home/main_floor/pantry/cmnd/sonoff_switch/POWER"
+    availability_topic: "home/main_floor/pantry/tele/sonoff_switch/LWT"
+    qos: 1
+    payload_on: "ON"
+    payload_off: "OFF"
+    payload_available: "Online"
+    payload_not_available: "Offline"
+    retain: true
 
 ecobee:
   api_key: !secret ecobee_api_key
