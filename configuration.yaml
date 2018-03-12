@@ -45,7 +45,7 @@ frontend:
 # Database controls
 recorder:
 # Uncomment next line to use PostgreSQL
-#  db_url: postgres://@/homeassistant
+  # db_url: postgres://@/homeassistant
   purge_interval: 2
   purge_keep_days: 7
 
