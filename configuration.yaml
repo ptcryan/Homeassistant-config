@@ -171,6 +171,15 @@ sensor:
         friendly_name: 'Pantry Door'
         value_template: '{% if states.sensor.ge_32563_hinge_pin_smart_door_sensor_access_control.state == "23" %}closed{% elif states.sensor.ge_32563_hinge_pin_smart_door_sensor_access_control.state == "22" %}open{% endif %}'
         icon_template: '{% if states.sensor.ge_32563_hinge_pin_smart_door_sensor_access_control.state == "23" %}mdi:door{% elif states.sensor.ge_32563_hinge_pin_smart_door_sensor_access_control.state == "22" %}mdi:door-open{% endif %}'
+  - platform: pollen
+    zip_code: !secret zip_code
+    monitored_conditions:
+      - allergy_average_forecasted
+      - allergy_average_historical
+      - allergy_index_today
+      - allergy_index_tomorrow
+      - allergy_index_yesterday
+      - disease_average_forecasted
 
 # adding Ring binary sensor. Not to be confused with Ring sensor.
 binary_sensor:

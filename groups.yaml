@@ -11,6 +11,7 @@ default_view:
     - group.guest_room
     - group.master_bedroom
     - group.porches
+    - group.pollen
 
 Lightbulb_group:
   view: yes
@@ -65,6 +66,12 @@ Doorbell_sensor:
   name: Doorbell
   entities:
     - group.doorbell
+
+Pollen_sensor:
+  view: yes
+  name: Pollen
+  entities:
+    - group.pollen
 
 hidden:
   view: no
@@ -265,3 +272,11 @@ Lightbulbs:
   - light.node_light
   - light.garage
   - light.pantry_light
+
+Pollen:
+  - sensor.allergy_index_forecasted_average
+  - sensor.allergy_index_historical_average
+  - sensor.allergy_index_today
+  - sensor.allergy_index_tomorrow
+  - sensor.allergy_index_yesterday
+  - sensor.cold__flu_forecasted_average
