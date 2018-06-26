@@ -73,6 +73,17 @@ Pollen_sensor:
   entities:
     - group.pollen
 
+Irrigation_controller:
+  view: yes
+  name: Irrigation
+  entities:
+    - group.watering_time
+    - group.next_cycle
+    - group.manual_switches
+    - group.automatic_switches
+    - group.sprinkler_controller
+    - group.watering_sensors
+
 hidden:
   view: no
   name: Hidden Entities
@@ -80,6 +91,50 @@ hidden:
     - group.hidden
 
 #---- Groups -------------------------------------------------------------------
+
+Watering Time:
+  - sensor.backyard_watering_time
+  - sensor.driveway_watering_time
+  - sensor.far_left_yard_watering_time
+  - sensor.far_right_yard_watering_time
+  - sensor.left_yard_watering_time
+  - sensor.right_yard_watering_time
+
+Next Cycle:
+  - sensor.backyard_next_cycle
+  - sensor.driveway_next_cycle
+  - sensor.far_left_yard_next_cycle
+  - sensor.far_right_yard_next_cycle
+  - sensor.left_yard_next_cycle
+  - sensor.right_yard_next_cycle
+
+Manual Switches:
+  - switch.backyard_manual_watering
+  - switch.driveway_manual_watering
+  - switch.far_left_yard_manual_watering
+  - switch.far_right_yard_manual_watering
+  - switch.left_yard_manual_watering
+  - switch.right_yard_manual_watering
+
+Automatic Switches:
+  - switch.backyard_automatic_watering
+  - switch.driveway_automatic_watering
+  - switch.far_left_yard_automatic_watering
+  - switch.far_right_yard_automatic_watering
+  - switch.left_yard_automatic_watering
+  - switch.right_yard_automatic_watering
+
+Sprinkler Controller:
+  - binary_sensor.home_controller_rain_sensor
+  - binary_sensor.home_controller_status
+
+Watering Sensors:
+  - binary_sensor.backyard_watering
+  - binary_sensor.driveway_watering
+  - binary_sensor.far_left_yard_watering
+  - binary_sensor.far_right_yard_watering
+  - binary_sensor.left_yard_watering
+  - binary_sensor.right_yard_watering
 
 Family Room:
   - light.living_room

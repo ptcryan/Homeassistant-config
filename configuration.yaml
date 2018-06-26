@@ -78,6 +78,13 @@ logbook:
 # Track the sun
 sun:
 
+hydrawise:
+  access_token: !secret hydrawise_token
+  scan_interval: 20
+
+device_tracker:
+  - platform: locative
+
 # password for Ring doorbell account
 ring:
   username: !secret ring_username
@@ -86,6 +93,7 @@ ring:
 # Weather Prediction
 sensor:
 #  platform: yr
+  - platform: hydrawise
   - platform: wunderground
     api_key: !secret wunderground_api_key
     monitored_conditions:
@@ -183,6 +191,7 @@ sensor:
 
 # adding Ring binary sensor. Not to be confused with Ring sensor.
 binary_sensor:
+  - platform: hydrawise
   - platform: ring
     monitored_conditions:
       - ding
@@ -208,6 +217,7 @@ mqtt:
 
 # Configuration for an MQTT Garage Door Controller (Cover)
 switch:
+  - platform: hydrawise
   - platform: mqtt
     name: "Left Garage Door"
     state_topic: home/main_floor/garage/left_door/switch/status
