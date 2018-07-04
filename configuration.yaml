@@ -217,6 +217,8 @@ mqtt:
 
 # Configuration for an MQTT Garage Door Controller (Cover)
 switch:
+  - platform: tplink
+    host: 10.0.1.210
   - platform: hydrawise
   - platform: mqtt
     name: "Left Garage Door"
@@ -243,7 +245,7 @@ hue:
     - host: !secret hue_ip
 
 # Enable the wemo component
-wemo:
+# wemo:
 
 light:
   - platform: mqtt

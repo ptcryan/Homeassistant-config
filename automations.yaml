@@ -201,7 +201,7 @@
   action:
     service: homeassistant.turn_on
     entity_id:
-      - switch.wemo_insight
+      - switch.sink_lights
       - light.living_room_fan_lights
 
 # Turn off the kitchen and living room lights when movement is not detected for 10 min
@@ -216,7 +216,7 @@
   action:
     service: homeassistant.turn_off
     entity_id:
-      - switch.wemo_insight
+      - switch.sink_lights
       - light.living_room_fan_lights
 
 ################################################################################
@@ -326,38 +326,38 @@
 ################################################################################
 
 #---- Sink Lights --------------------------------------------------------------
-- id: wemo_switch_mqtt_status_off
-  alias: Wemo switch mqtt status off
+- id: tplink_switch_mqtt_status_off
+  alias: TP-Link switch mqtt status off
   trigger:
     platform: state
     to: 'off'
-    entity_id: switch.wemo_insight
+    entity_id: switch.sink_lights
   action:
     service: mqtt.publish
     data:
       topic: "home/main_floor/kitchen/sink_lights/status"
       payload: 'off'
 
-- id: wemo_switch_mqtt_status_on
-  alias: Wemo switch mqtt status on
+- id: tplink_switch_mqtt_status_on
+  alias: TP-Link switch mqtt status on
   trigger:
     platform: state
     to: 'on'
-    entity_id: switch.wemo_insight
+    entity_id: switch.sink_lights
   action:
     service: mqtt.publish
     data:
       topic: "home/main_floor/kitchen/sink_lights/status"
       payload: 'on'
 
-- id: wemo_switch_mqtt_control
-  alias: Wemo switch mqtt control
+- id: tplink_switch_mqtt_control
+  alias: TP-Link switch mqtt control
   trigger:
     platform: mqtt
     topic: "home/main_floor/kitchen/sink_lights/set"
   action:
     service_template: 'homeassistant.turn_{{ trigger.payload }}'
-    entity_id: switch.wemo_insight
+    entity_id: switch.sink_lights
 
 #---- Desk Lamp ----------------------------------------------------------------
 - id: computer_desk_lamp_mqtt_status

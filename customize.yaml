@@ -2,9 +2,9 @@
     icon: mdi:remote
   switch.right_garage_door:
     icon: mdi:remote
-  switch.wemo_insight:
-    icon: mdi:lightbulb
-    friendly_name: Sink Lights
+  # switch.wemo_insight:
+  #   icon: mdi:lightbulb
+  #   friendly_name: Sink Lights
   light.node_light:
     icon: mdi:atom
     friendly_name: Test Lamp

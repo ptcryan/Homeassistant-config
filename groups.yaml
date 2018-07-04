@@ -150,7 +150,7 @@ Front Room:
 
 Kitchen:
   - light.dining_room_light
-  - switch.wemo_insight
+  - switch.sink_lights
   - binary_sensor.downstairs_occupancy
   - binary_sensor.ecolink_motion_detector_sensor
   - sensor.downstairs_temperature
