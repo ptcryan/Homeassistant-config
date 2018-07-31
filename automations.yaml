@@ -134,7 +134,7 @@
       entity_id: sensor.movement
       to: '0'
       for:
-        minutes: 10
+        minutes: 2
   action:
     - service: homeassistant.turn_off
       entity_id: light.hue_white_lamp_7
@@ -185,6 +185,27 @@
   action:
     service: homeassistant.turn_off
     entity_id: light.back_door
+
+##############################################################################
+# This section is for the automation of the foyer lights
+##############################################################################
+- id: foyer_lights_night_on
+  alias: Turn on the foyer lights at night
+  trigger:
+    platform: sun
+    event: sunset
+  action:
+    service: homeassistant.turn_on
+    entity_id: light.foyer_lights
+
+- id: foyer_lights_off
+  alias: Turn off the foyer lights late at night
+  trigger:
+    platform: time
+    at: '01:00:00'
+  action:
+    service: homeassistant.turn_off
+    entity_id: light.foyer_lights
 
 ################################################################################
 # This section contains automations for controlling kitchen and living room    #

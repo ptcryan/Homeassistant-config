@@ -264,6 +264,17 @@ light:
     payload_available: "Online"
     payload_not_available: "Offline"
     retain: true
+  - platform: mqtt
+    name: "foyer lights"
+    state_topic: "home/main_floor/foyer/stat/sonoff_switch/POWER"
+    command_topic: "home/main_floor/foyer/cmnd/sonoff_switch/POWER"
+    availability_topic: "home/main_floor/foyer/tele/sonoff_switch/LWT"
+    qos: 1
+    payload_on: "ON"
+    payload_off: "OFF"
+    payload_available: "Online"
+    payload_not_available: "Offline"
+    retain: true
 
 ecobee:
   api_key: !secret ecobee_api_key

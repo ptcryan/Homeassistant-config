@@ -8,6 +8,7 @@ default_view:
     - group.pantry
     - group.computer_room
     - group.front_room
+    - group.foyer
     - group.guest_room
     - group.master_bedroom
     - group.porches
@@ -147,6 +148,9 @@ Front Room:
   - binary_sensor.front_room_occupancy
   - sensor.downstairs_humidity
   - sensor.front_room_temperature
+
+Foyer:
+  - light.foyer_lights
 
 Kitchen:
   - light.dining_room_light
@@ -327,6 +331,7 @@ Lightbulbs:
   - light.node_light
   - light.garage
   - light.pantry_light
+  - light.foyer_lights
 
 Pollen:
   - sensor.allergy_index_forecasted_average
