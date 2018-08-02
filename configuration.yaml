@@ -275,6 +275,28 @@ light:
     payload_available: "Online"
     payload_not_available: "Offline"
     retain: true
+  - platform: mqtt
+    name: "Front Room Light"
+    state_topic: "home/main_floor/front_room1/stat/sonoff_switch/POWER"
+    command_topic: "home/main_floor/front_room1/cmnd/sonoff_switch/POWER"
+    availability_topic: "home/main_floor/front_room1/tele/sonoff_switch/LWT"
+    qos: 1
+    payload_on: "ON"
+    payload_off: "OFF"
+    payload_available: "Online"
+    payload_not_available: "Offline"
+    retain: true
+  - platform: mqtt
+    name: "Wine Rack lights"
+    state_topic: "home/main_floor/wine_rack/stat/sonoff_switch/POWER"
+    command_topic: "home/main_floor/wine_rack/cmnd/sonoff_switch/POWER"
+    availability_topic: "home/main_floor/wine_rack/tele/sonoff_switch/LWT"
+    qos: 1
+    payload_on: "ON"
+    payload_off: "OFF"
+    payload_available: "Online"
+    payload_not_available: "Offline"
+    retain: true
 
 ecobee:
   api_key: !secret ecobee_api_key

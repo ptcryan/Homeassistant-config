@@ -9,6 +9,7 @@ default_view:
     - group.computer_room
     - group.front_room
     - group.foyer
+    - group.wine_rack
     - group.guest_room
     - group.master_bedroom
     - group.porches
@@ -41,7 +42,6 @@ motion_view:
   name: Motion
   entities:
     - group.movement_sensors
-    - group.all_automations
 
 phone_sensors:
   view: yes
@@ -84,6 +84,13 @@ Irrigation_controller:
     - group.automatic_switches
     - group.sprinkler_controller
     - group.watering_sensors
+
+automation_view:
+  name: Automation
+  view: yes
+  entities:
+    - group.all_automations
+    - group.all_scripts
 
 hidden:
   view: no
@@ -148,9 +155,13 @@ Front Room:
   - binary_sensor.front_room_occupancy
   - sensor.downstairs_humidity
   - sensor.front_room_temperature
+  - light.front_room_light
 
 Foyer:
   - light.foyer_lights
+
+Wine Rack:
+  - light.wine_rack_lights
 
 Kitchen:
   - light.dining_room_light
@@ -332,6 +343,8 @@ Lightbulbs:
   - light.garage
   - light.pantry_light
   - light.foyer_lights
+  - light.wine_rack_lights
+  - light.front_room_light
 
 Pollen:
   - sensor.allergy_index_forecasted_average

@@ -152,8 +152,24 @@
     event: sunset
     # offset: '-00:45:00'
   action:
-    service: homeassistant.turn_on
-    entity_id: light.front_door
+    service: light.turn_on
+    data:
+      brightness_pct: 100
+      transition: 5
+      entity_id: light.front_door
+
+# Reduce light brightness late night
+- id: front_door_reduce_light
+  alias: Reduce front door light at night
+  trigger:
+    platform: time
+    at: '01:00:00'
+  action:
+    service: light.turn_on
+    data:
+      brightness_pct: 50
+      transition: 5
+      entity_id: [light.front_door, light.back_door]
 
 # Turn off the front door light in the morning
 - id: front_door_night_light_off
@@ -162,8 +178,10 @@
     platform: sun
     event: sunrise
   action:
-    service: homeassistant.turn_off
-    entity_id: light.front_door
+    service: light.turn_off
+    data:
+      transition: 5
+      entity_id: light.front_door
 
 # Turn on the back door light at night
 - id: back_door_night_light_on
@@ -171,10 +189,13 @@
   trigger:
     platform: sun
     event: sunset
-    offset: '-00:45:00'
+    # offset: '-00:45:00'
   action:
-    service: homeassistant.turn_on
-    entity_id: light.back_door
+    service: light.turn_on
+    data:
+      brightness_pct: 100
+      transition: 5
+      entity_id: light.back_door
 
 # turn off the back door light in the morning
 - id: back_door_night_light_off
@@ -183,8 +204,10 @@
     platform: sun
     event: sunrise
   action:
-    service: homeassistant.turn_off
-    entity_id: light.back_door
+    service: light.turn_off
+    data:
+      transition: 5
+      entity_id: light.back_door
 
 ##############################################################################
 # This section is for the automation of the foyer lights
@@ -206,6 +229,70 @@
   action:
     service: homeassistant.turn_off
     entity_id: light.foyer_lights
+
+##############################################################################
+# This section is for the automation of the front room1 lights
+##############################################################################
+- id: living_room_lights_night_on
+  alias: Turn on the living room lights at night
+  trigger:
+    platform: sun
+    event: sunset
+    offset: '-01:00:00'
+  action:
+    service: homeassistant.turn_on
+    entity_id: light.front_room_light
+
+- id: living_room_lights_off
+  alias: Turn off the living room lights late at night
+  trigger:
+    platform: time
+    at: '01:00:00'
+  action:
+    service: homeassistant.turn_off
+    entity_id: light.front_room_light
+
+##############################################################################
+# This section is for the automation of the wine rack lights
+##############################################################################
+- id: wine_rack_lights_night_on
+  alias: Turn on the wine_rack lights at night
+  trigger:
+    platform: sun
+    event: sunset
+    offset: '-01:00:00'
+  action:
+    service: homeassistant.turn_on
+    entity_id: light.wine_rack_lights
+
+- id: wine_rack_lights_morning_on
+  alias: Turn on the wine rack lights early in the morning
+  trigger:
+    platform: sun
+    event: sunrise
+    offset: '-01:00:00'
+  action:
+    service: homeassistant.turn_on
+    entity_id: light.wine_rack_lights
+
+- id: wine_rack_lights_morning_off
+  alias: Turn off the wine rack lights in the morning
+  trigger:
+    platform: sun
+    event: sunrise
+    offset: '+02:00:00'
+  action:
+    service: homeassistant.turn_off
+    entity_id: light.wine_rack_lights
+
+- id: wine_rack_lights_off
+  alias: Turn off the wine rack lights late at night
+  trigger:
+    platform: time
+    at: '01:00:00'
+  action:
+    service: homeassistant.turn_off
+    entity_id: light.wine_rack_lights
 
 ################################################################################
 # This section contains automations for controlling kitchen and living room    #
