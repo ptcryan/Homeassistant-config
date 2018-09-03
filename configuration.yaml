@@ -51,7 +51,7 @@ recorder:
 
 http:
   # Uncomment this to add a password (recommended!)
-  api_password: !secret http_password
+#  api_password: !secret http_password
   ssl_certificate: !secret ssl_certificate
   ssl_key: !secret ssl_key
   base_url: !secret base_url
@@ -210,6 +210,9 @@ tts:
 
 # Enable MQTT server
 mqtt:
+  broker: !secret mqtt_ip
+  username: !secret mqtt_username
+  password: !secret mqtt_password
   client_id: HA_Server_6b7359
 
 # mqtt_statestream:
@@ -243,9 +246,6 @@ switch:
 hue:
   bridges:
     - host: !secret hue_ip
-
-# Enable the wemo component
-# wemo:
 
 light:
   - platform: mqtt
