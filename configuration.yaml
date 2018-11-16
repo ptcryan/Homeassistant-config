@@ -51,7 +51,7 @@ recorder:
 
 http:
   # Uncomment this to add a password (recommended!)
-#  api_password: !secret http_password
+  api_password: !secret http_password
   ssl_certificate: !secret ssl_certificate
   ssl_key: !secret ssl_key
   base_url: !secret base_url
@@ -352,6 +352,12 @@ history_graph:
     entities:
       - sensor.pws_temp_f
       - sensor.pws_pressure_in
+
+octoprint:
+  - host: !secret octoprint_host
+    api_key: !secret octoprint_api
+    name: 'Ender 3'
+    number_of_tools: 1
 
 
 #############################
