@@ -177,8 +177,26 @@ sensor:
     sensors:
       pantry_door_sensor:
         friendly_name: 'Pantry Door'
-        value_template: '{% if states.sensor.ge_32563_hinge_pin_smart_door_sensor_access_control.state == "23" %}closed{% elif states.sensor.ge_32563_hinge_pin_smart_door_sensor_access_control.state == "22" %}open{% endif %}'
-        icon_template: '{% if states.sensor.ge_32563_hinge_pin_smart_door_sensor_access_control.state == "23" %}mdi:door{% elif states.sensor.ge_32563_hinge_pin_smart_door_sensor_access_control.state == "22" %}mdi:door-open{% endif %}'
+        value_template: '{% if states.sensor.ge_32563_hinge_pin_smart_door_sensor_access_control_3.state == "23" %}closed{% elif states.sensor.ge_32563_hinge_pin_smart_door_sensor_access_control_3.state == "22" %}open{% endif %}'
+        icon_template: '{% if states.sensor.ge_32563_hinge_pin_smart_door_sensor_access_control_3.state == "23" %}mdi:door{% elif states.sensor.ge_32563_hinge_pin_smart_door_sensor_access_control_3.state == "22" %}mdi:door-open{% endif %}'
+  - platform: template
+    sensors:
+      pantry_door_sensor_battery:
+        friendly_name: 'Pantry Door Sensor Battery'
+        value_template: '{% if states.zwave.ge_32563_hinge_pin_smart_door_sensor_3 %} {{ states.zwave.ge_32563_hinge_pin_smart_door_sensor_3.attributes.battery_level }} {% else %} Unknown {% endif %}'
+        unit_of_measurement: '%'
+      garage_door_sensor_1_battery:
+        friendly_name: 'Left Garage Door Sensor 1 Battery'
+        value_template: '{% if states.zwave.ecolink_garage_door_tilt_sensor_2 %} {{ states.zwave.ecolink_garage_door_tilt_sensor_2.attributes.battery_level }} {% else %} Unknown {% endif %}'
+        unit_of_measurement: '%'
+      garage_door_sensor_2_battery:
+        friendly_name: 'Right Garage Door Sensor Battery'
+        value_template: '{% if states.zwave.ecolink_garage_door_tilt_sensor %} {{ states.zwave.ecolink_garage_door_tilt_sensor.attributes.battery_level }} {% else %} Unknown {% endif %}'
+        unit_of_measurement: '%'
+      motion_sensor_battery:
+        friendly_name: 'Motion Sensor Sensor Battery'
+        value_template: '{% if states.zwave.ecolink_motion_detector %} {{ states.zwave.ecolink_motion_detector.attributes.battery_level }} {% else %} Unknown {% endif %}'
+        unit_of_measurement: '%'
   - platform: pollen
     zip_code: !secret zip_code
     monitored_conditions:

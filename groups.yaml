@@ -171,6 +171,8 @@ Kitchen:
   - sensor.downstairs_temperature
   - sensor.downstairs_humidity
   - sensor.pantry_door_sensor
+  - sensor.pantry_door_sensor_battery
+  - sensor.motion_sensor_battery
 
 Pantry:
   - light.pantry_light
@@ -237,6 +239,8 @@ Garage Sensors:
   - switch.left_garage_door
   - switch.right_garage_door
   - light.garage
+  - sensor.garage_door_sensor_1_battery
+  - sensor.garage_door_sensor_2_battery
 
 Movement Sensors:
   - binary_sensor.downstairs_occupancy
