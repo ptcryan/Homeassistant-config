@@ -26,10 +26,10 @@ weather_view:
   name: Weather
   entities:
     - group.weather
-    - group.personal_weather_station
-    - group.home_environment
-    - group.forecast
-    - history_graph.pws_history
+#    - group.personal_weather_station
+#    - group.home_environment
+#    - group.forecast
+#    - history_graph.pws_history
 
 garage_view:
   view: yes
@@ -199,16 +199,22 @@ Porches:
   - light.back_door
 
 Weather:
+  - sensor.dark_sky_daily_summary
   - sensor.dark_sky_summary
+  - sensor.dark_sky_temperature
+  - sensor.dark_sky_cloud_coverage
   - sensor.dark_sky_nearest_storm_distance
   - sensor.dark_sky_precip_probability
-  - sensor.dark_sky_temperature
+  - sensor.dark_sky_precip
+  - sensor.dark_sky_precip_intensity
+  - sensor.dark_sky_dew_point
   - sensor.dark_sky_humidity
   - sensor.dark_sky_pressure
   - sensor.dark_sky_wind_bearing
   - sensor.dark_sky_wind_speed
   - sensor.dark_sky_daily_high_temperature
   - sensor.dark_sky_daily_low_temperature
+  - sensor.dark_sky_uv_index
   - sun.sun
 
 Personal Weather Station:
@@ -272,10 +278,14 @@ Phone Location:
   - device_tracker.lynnettes_iphone
 
 Computer Sensors:
-  - sensor.disk_use_
-  - sensor.cpu_use
+  - sensor.disk_use_percent_
+  - sensor.processor_use
   - sensor.last_boot
-  - sensor.ram_use
+  - sensor.memory_use_percent
+  - sensor.swap_use_percent
+  - sensor.load_1m
+  - sensor.load_5m
+  - sensor.load_15m
   - sensor.speedtest_download
   - sensor.speedtest_ping
   - sensor.speedtest_upload
@@ -351,12 +361,12 @@ Lightbulbs:
   - light.front_room_light
 
 Pollen:
-  - sensor.allergy_index_forecasted_average
-  - sensor.allergy_index_historical_average
+  - sensor.allergy_index_forecasted_average_2
+  - sensor.allergy_index_historical_average_2
   - sensor.allergy_index_today
   - sensor.allergy_index_tomorrow
   - sensor.allergy_index_yesterday
-  - sensor.cold__flu_forecasted_average
+  - sensor.cold__flu_forecasted_average_2
 
 Pollen Summary:
   - sensor.allergy_today
@@ -364,3 +374,4 @@ Pollen Summary:
   - sensor.allergy_tomorrow
   - sensor.allergens_tomorrow
   - sensor.allergy_summary
+  - sensor.flu_conditions
