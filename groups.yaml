@@ -135,6 +135,10 @@ Automatic Switches:
 Sprinkler Controller:
   - binary_sensor.home_controller_rain_sensor
   - binary_sensor.home_controller_status
+  - sensor.dark_sky_precip_probability
+  - sensor.dark_sky_precip
+  - sensor.dark_sky_precip_intensity
+
 
 Watering Sensors:
   - binary_sensor.backyard_watering

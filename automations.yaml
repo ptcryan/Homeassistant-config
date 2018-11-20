@@ -122,6 +122,13 @@
     - platform: state
       entity_id: sensor.movement
       to: '1'
+  condition:
+    condition: or
+    conditions:
+      - condition: template
+        value_template: "{{ state_attr('sun.sun', 'elevation') < 10 }}"
+      - condition: template
+        value_template: "{{ states.sensor.dark_sky_cloud_coverage.state | float(2) > 75.0 }}"
   action:
     - service: homeassistant.turn_on
       entity_id: light.hue_white_lamp_7
@@ -306,6 +313,13 @@
     platform: state
     entity_id: binary_sensor.ecolink_motion_detector_sensor
     to: 'on'
+  condition:
+    condition: or
+    conditions:
+      - condition: template
+        value_template: "{{ state_attr('sun.sun', 'elevation') < 10 }}"
+      - condition: template
+        value_template: "{{ states.sensor.dark_sky_cloud_coverage.state | float(2) > 75.0 }}"
   action:
     service: homeassistant.turn_on
     entity_id:
