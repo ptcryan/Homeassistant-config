@@ -86,6 +86,12 @@ Irrigation_controller:
     - group.sprinkler_controller
     - group.watering_sensors
 
+3D_printer:
+  view: yes
+  name: "3D Printer"
+  entities:
+    - group.ender_3_printer
+
 automation_view:
   name: Automation
   view: yes
@@ -381,3 +387,13 @@ Pollen Summary:
   - sensor.allergens_tomorrow
   - sensor.allergy_summary
   - sensor.flu_conditions
+
+Ender 3 Printer:
+  - binary_sensor.ender_3_printing
+  - binary_sensor.ender_3_printing_error
+  - sensor.ender_3_actual_tool0_temp
+  - sensor.ender_3_current_state
+  - sensor.ender_3_job_percentage
+  - sensor.ender_3_target_tool0_temp
+  - sensor.ender_3_time_elapsed
+  - sensor.ender_3_time_remaining
