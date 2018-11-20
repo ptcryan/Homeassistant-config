@@ -312,6 +312,8 @@ Hidden:
   - binary_sensor.ecolink_garage_door_tilt_sensor_sensor_2
 
 Temperatures:
+  - climate.downstairs
+  - climate.upstairs
   - sensor.downstairs_humidity
   - sensor.downstairs_temperature
   - sensor.living_room_temperature
