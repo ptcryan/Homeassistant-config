@@ -179,6 +179,7 @@ sensor:
         friendly_name: 'Pantry Door'
         value_template: '{% if states.sensor.ge_32563_hinge_pin_smart_door_sensor_access_control_3.state == "23" %}closed{% elif states.sensor.ge_32563_hinge_pin_smart_door_sensor_access_control_3.state == "22" %}open{% endif %}'
         icon_template: '{% if states.sensor.ge_32563_hinge_pin_smart_door_sensor_access_control_3.state == "23" %}mdi:door{% elif states.sensor.ge_32563_hinge_pin_smart_door_sensor_access_control_3.state == "22" %}mdi:door-open{% endif %}'
+# create sensors for the z-wave device's batteries
   - platform: template
     sensors:
       pantry_door_sensor_battery:
@@ -186,7 +187,7 @@ sensor:
         value_template: '{% if states.zwave.ge_32563_hinge_pin_smart_door_sensor_3 %} {{ states.zwave.ge_32563_hinge_pin_smart_door_sensor_3.attributes.battery_level }} {% else %} Unknown {% endif %}'
         unit_of_measurement: '%'
       garage_door_sensor_1_battery:
-        friendly_name: 'Left Garage Door Sensor 1 Battery'
+        friendly_name: 'Left Garage Door Sensor Battery'
         value_template: '{% if states.zwave.ecolink_garage_door_tilt_sensor_2 %} {{ states.zwave.ecolink_garage_door_tilt_sensor_2.attributes.battery_level }} {% else %} Unknown {% endif %}'
         unit_of_measurement: '%'
       garage_door_sensor_2_battery:
@@ -194,7 +195,7 @@ sensor:
         value_template: '{% if states.zwave.ecolink_garage_door_tilt_sensor %} {{ states.zwave.ecolink_garage_door_tilt_sensor.attributes.battery_level }} {% else %} Unknown {% endif %}'
         unit_of_measurement: '%'
       motion_sensor_battery:
-        friendly_name: 'Motion Sensor Sensor Battery'
+        friendly_name: 'Motion Sensor Battery'
         value_template: '{% if states.zwave.ecolink_motion_detector %} {{ states.zwave.ecolink_motion_detector.attributes.battery_level }} {% else %} Unknown {% endif %}'
         unit_of_measurement: '%'
   - platform: pollen
@@ -206,6 +207,24 @@ sensor:
       - allergy_index_tomorrow
       - allergy_index_yesterday
       - disease_average_forecasted
+# Create my own custom allergy entities
+  - platform: template
+    sensors:
+      allergy_today:
+        friendly_name: "Today's allergy summary"
+        value_template: "{{ states('sensor.allergy_index_today') }} - {{ state_attr('sensor.allergy_index_today', 'rating') }}"
+      allergens_today:
+        friendly_name: "Today's allergens"
+        value_template: "{% if states('sensor.allergy_index_today.attributes.allergen_name_1') %}{{ state_attr('sensor.allergy_index_today', 'allergen_name_1') }}{% endif %}{% if states('sensor.allergy_index_today.attributes.allergen_name_2') %}, {{ state_attr('sensor.allergy_index_today', 'allergen_name_2') }}{% endif %}{% if states('sensor.allergy_index_today.attributes.allergen_name_3') %}{% else %}, {{ state_attr('sensor.allergy_index_today', 'allergen_name_3') }}{% endif %}"
+      allergy_tomorrow:
+        friendly_name: "Tomorrow's allergy summary"
+        value_template: "{{ states('sensor.allergy_index_tomorrow') }} - {{ state_attr('sensor.allergy_index_tomorrow', 'rating') }}"
+      allergens_tomorrow:
+        friendly_name: "Tomorrow's allergens"
+        value_template: "{% if states('sensor.allergy_index_tomorrow.attributes.allergen_name_1') %}{{ state_attr('sensor.allergy_index_tomorrow', 'allergen_name_1') }}{% endif %}{% if states('sensor.allergy_index_tomorrow.attributes.allergen_name_2') %}, {{ state_attr('sensor.allergy_index_tomorrow', 'allergen_name_2') }}{% endif %}{% if states('sensor.allergy_index_tomorrow.attributes.allergen_name_3') %}{% else %}, {{ state_attr('sensor.allergy_index_tomorrow', 'allergen_name_3') }}{% endif %}"
+      allergy_summary:
+        friendly_name: "Tomorrow's allergy summary"
+        value_template: "{{ state_attr('sensor.allergy_index_forecasted_average_2', 'outlook') }}"
 
 # adding Ring binary sensor. Not to be confused with Ring sensor.
 binary_sensor:

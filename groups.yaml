@@ -13,7 +13,7 @@ default_view:
     - group.guest_room
     - group.master_bedroom
     - group.porches
-    - group.pollen
+    - group.pollen_summary
 
 Lightbulb_group:
   view: yes
@@ -357,3 +357,10 @@ Pollen:
   - sensor.allergy_index_tomorrow
   - sensor.allergy_index_yesterday
   - sensor.cold__flu_forecasted_average
+
+Pollen Summary:
+  - sensor.allergy_today
+  - sensor.allergens_today
+  - sensor.allergy_tomorrow
+  - sensor.allergens_tomorrow
+  - sensor.allergy_summary
