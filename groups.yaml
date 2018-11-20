@@ -49,6 +49,7 @@ phone_sensors:
   entities:
     - group.phone_status
     - group.phone_location
+    - group.tile_info
 
 computer_ststus:
   view: yes
@@ -263,23 +264,22 @@ Movement Sensors:
   - sensor.movement
 
 Phone Status:
-  - sensor.saturn_battery_level
-  - sensor.saturn_battery_state
+  - sensor.dlr_iphone_battery_level
+  - sensor.dlr_iphone_battery_state
   - sensor.lynnettes_iphone_battery_level
   - sensor.lynnettes_iphone_battery_state
-  - sensor.jacksons_iphone_battery_level
-  - sensor.jacksons_iphone_battery_state
-  - sensor.elizabeths_iphone_battery_level
-  - sensor.elizabeths_iphone_battery_state
-  - sensor.elizabeths_iphone_battery_level_2
-  - sensor.elizabeths_iphone_battery_state_2
+  - sensor.iphone_battery_level_2
+  - sensor.iphone_battery_state_2
 
 Phone Location:
   - device_tracker.david
   - device_tracker.elizabeth
-  - device_tracker.elizabeths_iphone
   - device_tracker.jacksons_iphone
   - device_tracker.lynnettes_iphone
+
+Tile Info:
+  - device_tracker.tile_ac8fc032a4e48add
+  - device_tracker.tile_p38536215fc7a94c4694a90a71ef1c373
 
 Computer Sensors:
   - sensor.disk_use_percent_

@@ -84,7 +84,9 @@ hydrawise:
   scan_interval: 20
 
 device_tracker:
-  - platform: locative
+  - platform: tile
+    username: !secret tile_user_name
+    password: !secret tile_password
 
 # Enable the Ring doorbell component
 ring:
@@ -227,8 +229,8 @@ sensor:
       - cloud_cover
       - humidity
       - pressure
-      - temperature_max
-      - temperature_min
+      - temperature_high
+      - temperature_low
       - uv_index
       - nearest_storm_distance
       - daily_summary
