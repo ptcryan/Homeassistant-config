@@ -13,6 +13,9 @@ homeassistant:
   # Include customizations
   customize: !include customize.yaml
 
+# Enable system health component
+system_health:
+
 # Enable cloud services
 cloud:
 config:
