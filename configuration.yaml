@@ -150,24 +150,17 @@ octoprint:
     name: 'Ender 3'
     number_of_tools: 1
 
+# Enable Speedtest component
+speedtestdotnet:
+  scan_interval:
+    minutes: 30
+  monitored_conditions:
+    - ping
+    - download
+    - upload
+
 sensor:
   - platform: hydrawise
-
-#  - platform: wunderground
-#    api_key: !secret wunderground_api_key
-#    monitored_conditions:
-#      - temp_f
-#      - pressure_in
-#      - dewpoint_f
-#      - weather_1d
-#      - weather_1n
-#      - weather_2d
-#      - weather_2n
-#      - weather_3d
-#      - weather_3n
-#      - weather_4d
-#      - weather_4n
-#    pws_id: !secret pws
 
   - platform: systemmonitor
     resources:
@@ -180,17 +173,6 @@ sensor:
       - type: load_1m
       - type: load_5m
       - type: load_15m
-
-  - platform: speedtest
-    minute:
-      - 55
-      - 10
-      - 25
-      - 40
-    monitored_conditions:
-      - ping
-      - download
-      - upload
 
   - platform: mqtt
     state_topic: 'office/sensor1'
@@ -232,8 +214,6 @@ sensor:
       - cloud_cover
       - humidity
       - pressure
-      - temperature_high
-      - temperature_low
       - uv_index
       - nearest_storm_distance
       - daily_summary
@@ -302,7 +282,7 @@ sensor:
         value_template: "{{ state_attr('sensor.allergy_index_forecasted_average_2', 'outlook') }}"
       flu_conditions:
         friendly_name: "Today's flu conditions"
-        value_template: "{{ state_attr('sensor.cold__flu_forecasted_average_2', 'rating') }} - {{ state_attr('sensor.cold__flu_forecasted_average_2', 'trend') }}"
+        value_template: "{{ state_attr('sensor.cold_flu_forecasted_average_2', 'rating') }} - {{ state_attr('sensor.cold_flu_forecasted_average_2', 'trend') }}"
 
 # adding Ring binary sensor. Not to be confused with Ring sensor.
 binary_sensor:
@@ -312,11 +292,17 @@ binary_sensor:
       - ding
       - motion
 
-# Configuration for an MQTT Garage Door Controller (Cover)
+# TP-Link outlet switch for sink lights
+tplink:
+  discovery: false
+  switch:
+    - host: 10.0.1.210
+
 switch:
-  - platform: tplink
-    host: 10.0.1.210
+  # Irrigation system
   - platform: hydrawise
+
+  # Configuration for an MQTT Garage Door Controller (Cover)
   - platform: mqtt
     name: "Left Garage Door"
     state_topic: home/main_floor/garage/left_door/switch/status

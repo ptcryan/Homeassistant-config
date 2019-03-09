@@ -26,16 +26,18 @@ weather_view:
   name: Weather
   entities:
     - group.weather
-#    - group.personal_weather_station
-#    - group.home_environment
-#    - group.forecast
-#    - history_graph.pws_history
 
 garage_view:
   view: yes
   name: Garage
   entities:
     - group.garage_sensors
+
+three_d_printer:
+  view: yes
+  name: 3D Printer
+  entities:
+    - group.ender_3d_printer
 
 motion_view:
   view: yes
@@ -51,7 +53,7 @@ phone_sensors:
     - group.phone_location
     - group.tile_info
 
-computer_ststus:
+computer_status:
   view: yes
   name: Computer Status
   entities:
@@ -85,12 +87,6 @@ Irrigation_controller:
     - group.automatic_switches
     - group.sprinkler_controller
     - group.watering_sensors
-
-3D_printer:
-  view: yes
-  name: "3D Printer"
-  entities:
-    - group.ender_3_printer
 
 automation_view:
   name: Automation
@@ -223,8 +219,6 @@ Weather:
   - sensor.dark_sky_pressure
   - sensor.dark_sky_wind_bearing
   - sensor.dark_sky_wind_speed
-  - sensor.dark_sky_daily_high_temperature
-  - sensor.dark_sky_daily_low_temperature
   - sensor.dark_sky_uv_index
   - sun.sun
 
@@ -248,7 +242,7 @@ Forecast:
   - sensor.pws_weather_4n
 
 Home Environment:
-  - sensor.date__time
+  - sensor.date_time
 
 Garage Sensors:
   - sensor.garage_door_sensor_1
@@ -288,7 +282,7 @@ Tile Info:
   - device_tracker.tile_p38536215fc7a94c4694a90a71ef1c373
 
 Computer Sensors:
-  - sensor.disk_use_percent_
+  - sensor.disk_use_percent
   - sensor.processor_use
   - sensor.last_boot
   - sensor.memory_use_percent
@@ -345,7 +339,6 @@ Doorbell:
   - sensor.ring_front_door_volume
 
 Lightbulbs:
-  - light.all_hue_lights
   - light.back_door
   - light.computer_desk
   - light.computer_room
@@ -378,7 +371,7 @@ Pollen:
   - sensor.allergy_index_today
   - sensor.allergy_index_tomorrow
   - sensor.allergy_index_yesterday
-  - sensor.cold__flu_forecasted_average_2
+  - sensor.cold_flu_forecasted_average_2
 
 Pollen Summary:
   - sensor.allergy_today
@@ -388,7 +381,7 @@ Pollen Summary:
   - sensor.allergy_summary
   - sensor.flu_conditions
 
-Ender 3 Printer:
+Ender 3D Printer:
   - binary_sensor.ender_3_printing
   - binary_sensor.ender_3_printing_error
   - sensor.ender_3_actual_tool0_temp
