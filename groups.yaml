@@ -264,22 +264,28 @@ Movement Sensors:
   - sensor.movement
 
 Phone Status:
-  - sensor.dlr_iphone_battery_level
-  - sensor.dlr_iphone_battery_state
-  - sensor.lynnettes_iphone_battery_level
-  - sensor.lynnettes_iphone_battery_state
-  - sensor.iphone_battery_level_2
-  - sensor.iphone_battery_state_2
+  - sensor.owntracks_david_battery
+#  - sensor.dlr_iphone_battery_level
+#  - sensor.dlr_iphone_battery_state
+#  - sensor.lynnettes_iphone_battery_level
+#  - sensor.lynnettes_iphone_battery_state
+#  - sensor.iphone_battery_level_2
+#  - sensor.iphone_battery_state_2
 
 Phone Location:
-  - device_tracker.david
-  - device_tracker.elizabeth
-  - device_tracker.jacksons_iphone
-  - device_tracker.lynnettes_iphone
+  - device_tracker.david_22feab18_0333_4e03_94a2_85a56c0cf54c
+  - sensor.owntracks_david_gps_accuracy
+#  - device_tracker.david
+#  - device_tracker.elizabeth
+#  - device_tracker.jacksons_iphone
+#  - device_tracker.lynnettes_iphone
 
 Tile Info:
-  - device_tracker.tile_ac8fc032a4e48add
-  - device_tracker.tile_p38536215fc7a94c4694a90a71ef1c373
+  - device_tracker.tile_6c7c07bcb34b4a28
+  - device_tracker.tile_p_38536215fc7a94c4694a90a71ef1c373
+  - device_tracker.tile_p_a26d8a3de0e7d0164a6de793e181eb7c
+#  - device_tracker.tile_ac8fc032a4e48add
+#  - device_tracker.tile_p38536215fc7a94c4694a90a71ef1c373
 
 Computer Sensors:
   - sensor.disk_use_percent

@@ -159,6 +159,11 @@ speedtestdotnet:
     - download
     - upload
 
+# Enable Owntracks device tracking
+owntracks:
+  max_gps_accuracy: 200
+  mqtt_topic: "owntracks/#"
+
 sensor:
   - platform: hydrawise
 
@@ -251,6 +256,17 @@ sensor:
         friendly_name: 'Motion Sensor Battery'
         value_template: '{% if states.zwave.ecolink_motion_detector %} {{ states.zwave.ecolink_motion_detector.attributes.battery_level }} {% else %} Unknown {% endif %}'
         unit_of_measurement: '%'
+
+  - platform: template
+    sensors:
+      owntracks_david_battery:
+        friendly_name: "David's Battery Level"
+        value_template: '{{ states.device_tracker.david_22feab18_0333_4e03_94a2_85a56c0cf54c.attributes.battery }}'
+        unit_of_measurement: '%'
+      owntracks_david_gps_accuracy:
+        friendly_name: "David's GPS Accuracy"
+        value_template: '{{ states.device_tracker.david_22feab18_0333_4e03_94a2_85a56c0cf54c.attributes.gps_accuracy }}'
+        unit_of_measurement: 'm'
 
   - platform: pollen
     zip_code: !secret zip_code
