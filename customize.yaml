@@ -11,6 +11,12 @@
   light.pantry_light:
     icon: mdi:lightbulb
     friendly_name: Pantry Light
+  light.hue_white_lamp_1_2:
+    icon: mdi:lightbulb
+    friendly_name: Guest Room Left Bed Light
+  light.hue_white_lamp_2_2:
+    icon: mdi:lightbulb
+    friendly_name: Guest Room Right Bed Light
   group.all_automations:
     hidden: false
   group.all_scripts:

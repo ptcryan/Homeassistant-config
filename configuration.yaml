@@ -22,18 +22,12 @@ config:
 
 # Enable the iOS app
 ios:
+mobile_app:
 
 # Enable Z-Wave
 zwave:
   usb_path: /dev/ttyACM0
   debug: True
-
-# Enable the configurator UI
-panel_iframe:
-  configurator:
-    title: Configurator
-    icon: mdi:wrench
-    url: !secret configurator_ip
 
 # Enables the frontend
 frontend:
@@ -54,14 +48,11 @@ recorder:
 
 http:
   # Uncomment this to add a password (recommended!)
-  api_password: !secret http_password
   ssl_certificate: !secret ssl_certificate
   ssl_key: !secret ssl_key
   base_url: !secret base_url
   ip_ban_enabled: True
   login_attempts_threshold: 5
-  trusted_networks:
-    - 127.0.0.1
 
 # Checks for available updates
 updater:
@@ -82,9 +73,9 @@ logbook:
 sun:
 
 # Enable the Hydrawise irrigation component
-hydrawise:
-  access_token: !secret hydrawise_token
-  scan_interval: 20
+#hydrawise:
+#  access_token: !secret hydrawise_token
+#  scan_interval: 20
 
 device_tracker:
   - platform: tile
@@ -92,20 +83,13 @@ device_tracker:
     password: !secret tile_password
 
 # Enable the Ring doorbell component
-ring:
-  username: !secret ring_username
-  password: !secret ring_password
-
-# Enable the Foscam camera component
-#camera:
-#  platform: foscam
-#  ip: !secret camera_ip
-#  username: !secret camera_username
-#  password: !secret camera_password
+#ring:
+#  username: !secret ring_username
+#  password: !secret ring_password
 
 # Enable the text to speech component
 tts:
-  platform: google
+  platform: google_translate
 
 # Enable the MQTT server component
 mqtt:
@@ -128,12 +112,6 @@ hue:
 # Enable the Ecobee thermostat component
 ecobee:
   api_key: !secret ecobee_api_key
-
-# Add Logitech Harmony Remote
-remote:
-  - platform: harmony
-    name: "Living Room TV"
-    host: !secret logitech_harmony_ip
 
 # Enable the History graph component
 history_graph:
@@ -159,13 +137,8 @@ speedtestdotnet:
     - download
     - upload
 
-# Enable Owntracks device tracking
-owntracks:
-  max_gps_accuracy: 200
-  mqtt_topic: "owntracks/#"
-
 sensor:
-  - platform: hydrawise
+#  - platform: hydrawise
 
   - platform: systemmonitor
     resources:
@@ -196,14 +169,6 @@ sensor:
     name: 'Movement'
     unit_of_measurement: 'bool'
     value_template: '{{ value_json.pir }}'
-
-  - platform: ring
-    monitored_conditions:
-      - battery
-      - last_activity
-      - volume
-      - last_ding
-      - last_motion
 
   - platform: darksky
     api_key: !secret darksky_api_key
@@ -257,56 +222,8 @@ sensor:
         value_template: '{% if states.zwave.ecolink_motion_detector %} {{ states.zwave.ecolink_motion_detector.attributes.battery_level }} {% else %} Unknown {% endif %}'
         unit_of_measurement: '%'
 
-  - platform: template
-    sensors:
-      owntracks_david_battery:
-        friendly_name: "David's Battery Level"
-        value_template: '{{ states.device_tracker.david_22feab18_0333_4e03_94a2_85a56c0cf54c.attributes.battery }}'
-        unit_of_measurement: '%'
-      owntracks_david_gps_accuracy:
-        friendly_name: "David's GPS Accuracy"
-        value_template: '{{ states.device_tracker.david_22feab18_0333_4e03_94a2_85a56c0cf54c.attributes.gps_accuracy }}'
-        unit_of_measurement: 'm'
-
-  - platform: pollen
-    zip_code: !secret zip_code
-    monitored_conditions:
-      - allergy_average_forecasted
-      - allergy_average_historical
-      - allergy_index_today
-      - allergy_index_tomorrow
-      - allergy_index_yesterday
-      - disease_average_forecasted
-
-# Create my own custom allergy entities
-  - platform: template
-    sensors:
-      allergy_today:
-        friendly_name: "Today's allergy summary"
-        value_template: "{{ states('sensor.allergy_index_today') }} - {{ state_attr('sensor.allergy_index_today', 'rating') }}"
-      allergens_today:
-        friendly_name: "Today's allergens"
-        value_template: "{% if states('sensor.allergy_index_today.attributes.allergen_name_1') %}{{ state_attr('sensor.allergy_index_today', 'allergen_name_1') }}{% endif %}{% if states('sensor.allergy_index_today.attributes.allergen_name_2') %}, {{ state_attr('sensor.allergy_index_today', 'allergen_name_2') }}{% endif %}{% if states('sensor.allergy_index_today.attributes.allergen_name_3') %}{% else %}, {{ state_attr('sensor.allergy_index_today', 'allergen_name_3') }}{% endif %}"
-      allergy_tomorrow:
-        friendly_name: "Tomorrow's allergy summary"
-        value_template: "{{ states('sensor.allergy_index_tomorrow') }} - {{ state_attr('sensor.allergy_index_tomorrow', 'rating') }}"
-      allergens_tomorrow:
-        friendly_name: "Tomorrow's allergens"
-        value_template: "{% if states('sensor.allergy_index_tomorrow.attributes.allergen_name_1') %}{{ state_attr('sensor.allergy_index_tomorrow', 'allergen_name_1') }}{% endif %}{% if states('sensor.allergy_index_tomorrow.attributes.allergen_name_2') %}, {{ state_attr('sensor.allergy_index_tomorrow', 'allergen_name_2') }}{% endif %}{% if states('sensor.allergy_index_tomorrow.attributes.allergen_name_3') %}{% else %}, {{ state_attr('sensor.allergy_index_tomorrow', 'allergen_name_3') }}{% endif %}"
-      allergy_summary:
-        friendly_name: "Tomorrow's allergy summary"
-        value_template: "{{ state_attr('sensor.allergy_index_forecasted_average_2', 'outlook') }}"
-      flu_conditions:
-        friendly_name: "Today's flu conditions"
-        value_template: "{{ state_attr('sensor.cold_flu_forecasted_average_2', 'rating') }} - {{ state_attr('sensor.cold_flu_forecasted_average_2', 'trend') }}"
-
-# adding Ring binary sensor. Not to be confused with Ring sensor.
-binary_sensor:
-  - platform: hydrawise
-  - platform: ring
-    monitored_conditions:
-      - ding
-      - motion
+#binary_sensor:
+#  - platform: hydrawise
 
 # TP-Link outlet switch for sink lights
 tplink:
@@ -316,7 +233,8 @@ tplink:
 
 switch:
   # Irrigation system
-  - platform: hydrawise
+#  - platform: hydrawise
+#    watering_minutes: 5
 
   # Configuration for an MQTT Garage Door Controller (Cover)
   - platform: mqtt
@@ -389,45 +307,14 @@ light:
     payload_not_available: "Offline"
     retain: true
 
-input_select:
-  living_room_tv:
-    name: "Living Room TV"
-    options:
-      - WATCH FIRE TV
-      - PowerOff
-      - WATCH TV
-      - Watch a Movie
-      - Use Mac
-      - FIRE TV WITH SURROUND
-    initial: PowerOff
-    icon: mdi:monitor
-
-script:
-  tvoff:
-    sequence:
-      - service: remote.turn_off
-        entity_id: remote.living_room_tv
-        data:
-          activity: -1
-  firetvsurround:
-    sequence:
-      - service: remote.turn_on
-        entity_id: remote.living_room_tv
-        data:
-          activity: 12106072
-  firetv:
-    sequence:
-      - service: remote.turn_on
-        entity_id: remote.living_room_tv
-        data:
-          activity: 12105863
-  broadcasttv:
-    sequence:
-      - service: remote.turn_on
-        entity_id: remote.living_room_tv
-        data:
-          activity: 12104283
-
+input_number:
+  watering_time:
+    name: Watering Time
+    min: 5
+    max: 30
+    step: 1
+    unit_of_measurement: min
+    icon: mdi:target
 
 #############################
 #         Includes          #
