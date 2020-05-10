@@ -13,16 +13,15 @@ homeassistant:
   # Include customizations
   customize: !include customize.yaml
 
-# Enable system health component
-system_health:
-
-# Enable cloud services
-cloud:
-config:
+# Enable the default integrations. This enables the following integrations:
+# Automation, HA Cloud, Configuration, Frontend, History, Input boolean, Input datetime,
+# Input number, Input select, Input text, Logbook, Map, Mobile app support, Person,
+# Scripts, Simple Service Discovery Protocol (SSDP), Sun, System Health, Updater,
+# Zero-configuration networking (zeroconf), and Zone
+default_config:
 
 # Enable the iOS app
 ios:
-mobile_app:
 
 # Enable Z-Wave
 zwave:
@@ -43,8 +42,9 @@ frontend:
 recorder:
 # Uncomment next line to use PostgreSQL
   # db_url: postgres://@/homeassistant
-  purge_interval: 2
-  purge_keep_days: 7
+  auto_purge: true
+  purge_keep_days: 10
+  commit_interval: 5
 
 http:
   # Uncomment this to add a password (recommended!)
@@ -54,9 +54,6 @@ http:
   ip_ban_enabled: True
   login_attempts_threshold: 5
 
-# Checks for available updates
-updater:
-
 # Discover some devices automatically
 discovery:
 
@@ -64,13 +61,11 @@ discovery:
 conversation:
 
 # Enables support for tracking state changes over time.
-history:
+# This is enabled automatically in default_config
+#history:
 
 # View all events in a logbook
 logbook:
-
-# Track the sun
-sun:
 
 # Enable the Hydrawise irrigation component
 #hydrawise:
@@ -112,14 +107,6 @@ hue:
 # Enable the Ecobee thermostat component
 ecobee:
   api_key: !secret ecobee_api_key
-
-# Enable the History graph component
-history_graph:
-  gr1:
-    name: PWS History
-    entities:
-      - sensor.pws_temp_f
-      - sensor.pws_pressure_in
 
 # Enable the Octoprint component
 octoprint:
@@ -320,5 +307,6 @@ input_number:
 #         Includes          #
 #############################
 automation: !include automations.yaml
+automation old: !include_dir_merge_list automations
 zone: !include_dir_list zones/
 group: !include groups.yaml
