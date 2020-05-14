@@ -1,19 +1,3 @@
-default_view:
-  view: yes
-  icon: mdi:home
-  entities:
-    - group.all_lights
-    - group.family_room
-    - group.kitchen
-    - group.pantry
-    - group.den
-    - group.front_room
-    - group.foyer
-    - group.wine_rack
-    - group.guest_room
-    - group.master_bedroom
-    - group.porches
-
 Lightbulb_group:
   view: yes
   name: Lights
@@ -73,13 +57,6 @@ Temperature:
 #    - group.automatic_switches
 #    - group.sprinkler_controller
 #    - group.watering_sensors
-
-automation_view:
-  name: Automation
-  view: yes
-  entities:
-    - group.all_automations
-    - group.all_scripts
 
 hidden:
   view: no
@@ -210,9 +187,6 @@ Weather:
   - sensor.dark_sky_wind_speed
   - sensor.dark_sky_uv_index
   - sun.sun
-
-Home Environment:
-  - sensor.date_time
 
 Garage Sensors:
   - sensor.garage_door_sensor_1

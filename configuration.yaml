@@ -30,13 +30,7 @@ zwave:
 
 # Enables the frontend
 frontend:
-  themes:
-    happy:
-      primary-color: green
-    sad:
-      primary-color: blue
-    night:
-      primary-color: darkred
+  themes: !include themes.yaml
 
 # Database controls
 recorder:
@@ -125,6 +119,35 @@ speedtestdotnet:
     - upload
 
 sensor:
+  - platform: template
+    sensors:
+      dest_address:
+        value_template: >-
+          {%- if is_state("input_select.destination", "!secret destination_selection_1_label") -%}
+            !secret destination_selection_1_address
+          {%- elif is_state("input_select.destination", "!secret destination_selection_2_label") -%}
+            !secret destination_selection_2_address
+          {%- elif is_state("input_select.destination", "!secret destination_selection_3_label") -%}
+            !secret destination_selection_3_address
+          {%- elif is_state("input_select.destination", "!secret destination_selection_4_label") -%}
+            !secret destination_selection_4_address
+          {%- elif is_state("input_select.destination", "!secret destination_selection_5_label") -%}
+            !secret destination_selection_5_address
+          {%- elif is_state("input_select.destination", "!secret destination_selection_6_label") -%}
+            !secret destination_selection_6_address
+          {%- elif is_state("input_select.destination", "!secret destination_selection_7_label") -%}
+            !secret destination_selection_7_address
+          {%- elif is_state("input_select.destination", "!secret destination_selection_8_label") -%}
+            !secret destination_selection_8_address
+          {%- else -%}
+            Unknown
+          {%- endif %}
+  - platform: waze_travel_time
+    name: "Me to destination"
+    origin: device_tracker.davids_iphone
+    destination: sensor.dest_address
+    region: 'US'
+
 #  - platform: hydrawise
 
   - platform: systemmonitor
@@ -216,7 +239,7 @@ sensor:
 tplink:
   discovery: false
   switch:
-    - host: 10.0.1.210
+    - host: !secret tplink_host
 
 switch:
   # Irrigation system
@@ -303,10 +326,23 @@ input_number:
     unit_of_measurement: min
     icon: mdi:target
 
+input_select:
+  destination:
+    name: destination
+    options:
+      - !secret destination_selection_1_label
+      - !secret destination_selection_2_label
+      - !secret destination_selection_3_label
+      - !secret destination_selection_4_label
+      - !secret destination_selection_5_label
+      - !secret destination_selection_6_label
+      - !secret destination_selection_7_label
+      - !secret destination_selection_8_label
+
 #############################
 #         Includes          #
 #############################
 automation: !include automations.yaml
 automation old: !include_dir_merge_list automations
 zone: !include_dir_list zones/
-group: !include groups.yaml
+#group: !include groups.yaml
