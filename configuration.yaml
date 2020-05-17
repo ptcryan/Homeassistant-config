@@ -71,11 +71,6 @@ device_tracker:
     username: !secret tile_user_name
     password: !secret tile_password
 
-# Enable the Ring doorbell component
-#ring:
-#  username: !secret ring_username
-#  password: !secret ring_password
-
 # Enable the text to speech component
 tts:
   platform: google_translate
@@ -118,27 +113,62 @@ speedtestdotnet:
     - download
     - upload
 
+input_text:
+  addr1:
+    initial: !secret destination_selection_1_address
+  addr2:
+    initial: !secret destination_selection_2_address
+  addr3:
+    initial: !secret destination_selection_3_address
+  addr4:
+    initial: !secret destination_selection_4_address
+  addr5:
+    initial: !secret destination_selection_5_address
+  addr6:
+    initial: !secret destination_selection_6_address
+  addr7:
+    initial: !secret destination_selection_7_address
+  addr8:
+    initial: !secret destination_selection_8_address
+  label1:
+    initial: !secret destination_selection_1_label
+  label2:
+    initial: !secret destination_selection_2_label
+  label3:
+    initial: !secret destination_selection_3_label
+  label4:
+    initial: !secret destination_selection_4_label
+  label5:
+    initial: !secret destination_selection_5_label
+  label6:
+    initial: !secret destination_selection_6_label
+  label7:
+    initial: !secret destination_selection_7_label
+  label8:
+    initial: !secret destination_selection_8_label
+
+
 sensor:
   - platform: template
     sensors:
       dest_address:
         value_template: >-
-          {%- if is_state("input_select.destination", "!secret destination_selection_1_label") -%}
-            !secret destination_selection_1_address
-          {%- elif is_state("input_select.destination", "!secret destination_selection_2_label") -%}
-            !secret destination_selection_2_address
-          {%- elif is_state("input_select.destination", "!secret destination_selection_3_label") -%}
-            !secret destination_selection_3_address
-          {%- elif is_state("input_select.destination", "!secret destination_selection_4_label") -%}
-            !secret destination_selection_4_address
-          {%- elif is_state("input_select.destination", "!secret destination_selection_5_label") -%}
-            !secret destination_selection_5_address
-          {%- elif is_state("input_select.destination", "!secret destination_selection_6_label") -%}
-            !secret destination_selection_6_address
-          {%- elif is_state("input_select.destination", "!secret destination_selection_7_label") -%}
-            !secret destination_selection_7_address
-          {%- elif is_state("input_select.destination", "!secret destination_selection_8_label") -%}
-            !secret destination_selection_8_address
+          {%- if is_state("input_select.destination", states("input_text.label1")) -%}
+            {{ states("input_text.addr1") }}
+          {%- elif is_state("input_select.destination", states("input_text.label2")) -%}
+            {{ states("input_text.addr2") }}
+          {%- elif is_state("input_select.destination", states("input_text.label3")) -%}
+            {{ states("input_text.addr3") }}
+          {%- elif is_state("input_select.destination", states("input_text.label4")) -%}
+            {{ states("input_text.addr4") }}
+          {%- elif is_state("input_select.destination", states("input_text.label5")) -%}
+            {{ states("input_text.addr5") }}
+          {%- elif is_state("input_select.destination", states("input_text.label6")) -%}
+            {{ states("input_text.addr6") }}
+          {%- elif is_state("input_select.destination", states("input_text.label7")) -%}
+            {{ states("input_text.addr7") }}
+          {%- elif is_state("input_select.destination", states("input_text.label8")) -%}
+            {{ states("input_text.addr8") }}
           {%- else -%}
             Unknown
           {%- endif %}

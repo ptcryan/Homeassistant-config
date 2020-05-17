@@ -3,6 +3,99 @@
 #############################
 
 ################################################################################
+# This section contains automations for controlling upstairs hallway lights    #
+################################################################################
+
+# Turn on the light at night
+- id: turn_on_hallway_light_at_night
+  alias: Turn on upstairs hallway at night
+  trigger:
+    platform: sun
+    event: sunset
+  action:
+    service: light.turn_on
+    data:
+      brightness_pct: 20
+      transition: 5
+      entity_id: light.upstairs_hallway
+
+# Turn off the light after 12am
+- id: turn_off_hallway_light_at_day
+  alias: Turn off upstairs hallway at day
+  trigger:
+    platform: time
+    at: "00:00:00"
+  action:
+    service: light.turn_off
+    data:
+      entity_id: light.upstairs_hallway
+      transition: 5
+
+# Turn on the light to 100% if there's movement
+- id: turn_on_upstairs_hallway_light_when_movement
+  alias: Turn on upstairs hallway light when movement
+  trigger:
+    platform: state
+    entity_id: binary_sensor.ecolink_motion_detector_sensor
+    to: 'on'
+#  condition:
+#    condition: or
+#    conditions:
+#      - condition: template
+#        value_template: "{{ state_attr('sun.sun', 'elevation') < 10 }}"
+#      - condition: template
+#        value_template: "{{ states.sensor.dark_sky_cloud_coverage.state | float(2) > 75.0 }}"
+  action:
+    service: light.turn_on
+    data:
+      brightness_pct: 100
+      transition: 5
+      entity_id: light.upstairs_hallway
+
+# Turn off the light when motion stops during the day
+- id: turn_off_upstairs_hallway_light_when_motion_stops_during_day
+  alias: Turn off upstairs hallway light when motion stops
+  trigger:
+    platform: state
+    entity_id: binary_sensor.ecolink_motion_detector_sensor
+    to: 'off'
+    for:
+      minutes: 5
+  condition:
+    condition: state
+    entity_id: sun.sun
+    state: above_horizon
+  action:
+    service: light.turn_off
+    data:
+      entity_id: light.upstairs_hallway
+      transition: 5
+
+# Turn down the light when motion stops during night
+- id: turn_down_upstairs_hallway_light_at_night
+  alias: Turn down upstairs hallway light when motion stops at night
+  trigger:
+    platform: state
+    entity_id: binary_sensor.ecolink_motion_detector_sensor
+    to: 'off'
+    for:
+      minutes: 5
+  condition:
+    condition: and
+    conditions:
+      - condition: state
+        entity_id: sun.sun
+        state: below_horizon
+      - condition: time
+        before: "00:00:00"
+  action:
+    service: light.turn_on
+    data:
+      brightness_pct: 20
+      transition: 5
+      entity_id: light.upstairs_hallway
+
+################################################################################
 # This section contains automations for controlling my desk lamp               #
 ################################################################################
 
