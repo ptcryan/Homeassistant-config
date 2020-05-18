@@ -38,13 +38,6 @@
     platform: state
     entity_id: binary_sensor.ecolink_motion_detector_sensor
     to: 'on'
-#  condition:
-#    condition: or
-#    conditions:
-#      - condition: template
-#        value_template: "{{ state_attr('sun.sun', 'elevation') < 10 }}"
-#      - condition: template
-#        value_template: "{{ states.sensor.dark_sky_cloud_coverage.state | float(2) > 75.0 }}"
   action:
     service: light.turn_on
     data:
@@ -60,7 +53,7 @@
     entity_id: binary_sensor.ecolink_motion_detector_sensor
     to: 'off'
     for:
-      minutes: 5
+      minutes: 1
   condition:
     condition: state
     entity_id: sun.sun
@@ -79,21 +72,34 @@
     entity_id: binary_sensor.ecolink_motion_detector_sensor
     to: 'off'
     for:
-      minutes: 5
+      minutes: 1
   condition:
-    condition: and
-    conditions:
-      - condition: state
-        entity_id: sun.sun
-        state: below_horizon
-      - condition: time
-        before: "00:00:00"
+    condition: sun
+    after: sunset
   action:
     service: light.turn_on
     data:
       brightness_pct: 20
       transition: 5
       entity_id: light.upstairs_hallway
+
+# Turn off the light when motion stops during late night
+- id: turn_down_upstairs_hallway_light_at_late_night
+  alias: Turn down upstairs hallway light when motion stops late at night
+  trigger:
+    platform: state
+    entity_id: binary_sensor.ecolink_motion_detector_sensor
+    to: 'off'
+    for:
+      minutes: 1
+  condition:
+    condition: sun
+    before: sunrise
+  action:
+    service: light.turn_off
+    data:
+      entity_id: light.upstairs_hallway
+      transition: 5
 
 ################################################################################
 # This section contains automations for controlling my desk lamp               #

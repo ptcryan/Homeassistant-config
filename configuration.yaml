@@ -369,10 +369,21 @@ input_select:
       - !secret destination_selection_7_label
       - !secret destination_selection_8_label
 
+# Configuration for setting scenes. Using this until I can
+# get HA Alexa configuration to work.
+input_boolean:
+  movie_on:
+    name: "Watch movie"
+    initial: off
+  normal_lights:
+    name: "Normal lights"
+    initial: off
+
 #############################
 #         Includes          #
 #############################
 automation: !include automations.yaml
 automation old: !include_dir_merge_list automations
 zone: !include_dir_list zones/
+scene: !include scenes.yaml
 #group: !include groups.yaml

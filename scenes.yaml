@@ -1,0 +1,13 @@
+- name: "Watch movie"
+  entities:
+    light.wine_rack_lights: off
+    switch.sink_lights: off
+    light.dining_room_light: off
+    light.living_room_fan_lights:
+      state: on
+      brightness_pct: 15
+    light.living_room_light:
+      state: on
+      #rgb_color: [217, 110, 255]
+      hs_color: [284.583, 56.471]
+      brightness_pct: 20

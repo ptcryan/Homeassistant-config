@@ -11,3 +11,25 @@
       payload: 'ON'
       topic: hass/lamp2/switch
     service: mqtt.publish
+- id: '1589148952840'
+  alias: Set HA night theme
+  description: ''
+  trigger:
+  - event: sunset
+    platform: sun
+  condition: []
+  action:
+  - data:
+      name: darkred
+    service: frontend.set_theme
+- id: '1589149302151'
+  alias: Set HA day theme
+  description: ''
+  trigger:
+  - event: sunrise
+    platform: sun
+  condition: []
+  action:
+  - data:
+      name: Light - Light Red
+    service: frontend.set_theme
