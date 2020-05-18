@@ -1,3 +1,6 @@
+Thumbs.db
+*.code-workspace
+*.graffle
 *.pid
 *.xml
 *.csr
