@@ -301,7 +301,7 @@
   alias: Turn on light when movement detected
   trigger:
     platform: state
-    entity_id: binary_sensor.ecolink_motion_detector_sensor
+    entity_id: binary_sensor.ecolink_motion_detector_sensor_2
     to: 'on'
   condition:
     condition: or
@@ -321,7 +321,7 @@
   alias: Turn off light when no movement
   trigger:
     platform: state
-    entity_id: binary_sensor.ecolink_motion_detector_sensor
+    entity_id: binary_sensor.ecolink_motion_detector_sensor_2
     to: 'off'
     for:
       minutes: 10
@@ -379,33 +379,6 @@
     service: homeassistant.turn_off
     entity_id: light.garage
 
-
-################################################################################
-# Automations for controlling pantry light                                     #
-################################################################################
-- id: pantry_light_off
-  alias: Pantry light off
-  trigger:
-    platform: state
-    to: closed
-    entity_id: sensor.pantry_door_sensor
-  action:
-    service: mqtt.publish
-    data:
-      topic: "home/main_floor/pantry/cmnd/sonoff_switch/POWER"
-      payload: "OFF"
-
-- id: pantry_light_on
-  alias: Pantry light on
-  trigger:
-    platform: state
-    to: open
-    entity_id: sensor.pantry_door_sensor
-  action:
-    service: mqtt.publish
-    data:
-      topic: "home/main_floor/pantry/cmnd/sonoff_switch/POWER"
-      payload: "ON"
 
 ###############################################################################
 # Notification Alert
