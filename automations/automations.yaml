@@ -7,134 +7,134 @@
 ################################################################################
 
 # Turn on the light at night
-- id: turn_on_hallway_light_at_night
-  alias: Turn on upstairs hallway at night
-  trigger:
-    platform: sun
-    event: sunset
-  action:
-    service: light.turn_on
-    data:
-      brightness_pct: 20
-      transition: 5
-      entity_id: light.upstairs_hallway
+#- id: turn_on_hallway_light_at_night
+#  alias: Turn on upstairs hallway at night
+#  trigger:
+#    platform: sun
+#    event: sunset
+#  action:
+#    service: light.turn_on
+#    data:
+#      brightness_pct: 20
+#      transition: 5
+#      entity_id: light.upstairs_hallway
 
 # Turn off the light after 12am
-- id: turn_off_hallway_light_at_day
-  alias: Turn off upstairs hallway at day
-  trigger:
-    platform: time
-    at: "00:00:00"
-  action:
-    service: light.turn_off
-    data:
-      entity_id: light.upstairs_hallway
-      transition: 5
+#- id: turn_off_hallway_light_at_day
+#  alias: Turn off upstairs hallway at day
+#  trigger:
+#    platform: time
+#    at: "00:00:00"
+#  action:
+#    service: light.turn_off
+#    data:
+#      entity_id: light.upstairs_hallway
+#      transition: 5
 
 # Turn on the light to 100% if there's movement
-- id: turn_on_upstairs_hallway_light_when_movement
-  alias: Turn on upstairs hallway light when movement
-  trigger:
-    platform: state
-    entity_id: binary_sensor.ecolink_motion_detector_sensor
-    to: 'on'
-  action:
-    service: light.turn_on
-    data:
-      brightness_pct: 100
-      transition: 5
-      entity_id: light.upstairs_hallway
+#- id: turn_on_upstairs_hallway_light_when_movement
+#  alias: Turn on upstairs hallway light when movement
+#  trigger:
+#    platform: state
+#    entity_id: binary_sensor.ecolink_motion_detector_sensor
+#    to: 'on'
+#  action:
+#    service: light.turn_on
+#    data:
+#      brightness_pct: 100
+#      transition: 5
+#      entity_id: light.upstairs_hallway
 
 # Turn off the light when motion stops during the day
-- id: turn_off_upstairs_hallway_light_when_motion_stops_during_day
-  alias: Turn off upstairs hallway light when motion stops
-  trigger:
-    platform: state
-    entity_id: binary_sensor.ecolink_motion_detector_sensor
-    to: 'off'
-    for:
-      minutes: 1
-  condition:
-    condition: state
-    entity_id: sun.sun
-    state: above_horizon
-  action:
-    service: light.turn_off
-    data:
-      entity_id: light.upstairs_hallway
-      transition: 5
+#- id: turn_off_upstairs_hallway_light_when_motion_stops_during_day
+#  alias: Turn off upstairs hallway light when motion stops
+#  trigger:
+#    platform: state
+#    entity_id: binary_sensor.ecolink_motion_detector_sensor
+#    to: 'off'
+#    for:
+#      minutes: 1
+#  condition:
+#    condition: state
+#    entity_id: sun.sun
+#    state: above_horizon
+#  action:
+#    service: light.turn_off
+#    data:
+#      entity_id: light.upstairs_hallway
+#      transition: 5
 
 # Turn down the light when motion stops during night
-- id: turn_down_upstairs_hallway_light_at_night
-  alias: Turn down upstairs hallway light when motion stops at night
-  trigger:
-    platform: state
-    entity_id: binary_sensor.ecolink_motion_detector_sensor
-    to: 'off'
-    for:
-      minutes: 1
-  condition:
-    condition: sun
-    after: sunset
-  action:
-    service: light.turn_on
-    data:
-      brightness_pct: 20
-      transition: 5
-      entity_id: light.upstairs_hallway
+#- id: turn_down_upstairs_hallway_light_at_night
+#  alias: Turn down upstairs hallway light when motion stops at night
+#  trigger:
+#    platform: state
+#    entity_id: binary_sensor.ecolink_motion_detector_sensor
+#    to: 'off'
+#    for:
+#      minutes: 1
+#  condition:
+#    condition: sun
+#    after: sunset
+#  action:
+#    service: light.turn_on
+#    data:
+#      brightness_pct: 20
+#      transition: 5
+#      entity_id: light.upstairs_hallway
 
 # Turn off the light when motion stops during late night
-- id: turn_down_upstairs_hallway_light_at_late_night
-  alias: Turn down upstairs hallway light when motion stops late at night
-  trigger:
-    platform: state
-    entity_id: binary_sensor.ecolink_motion_detector_sensor
-    to: 'off'
-    for:
-      minutes: 1
-  condition:
-    condition: sun
-    before: sunrise
-  action:
-    service: light.turn_off
-    data:
-      entity_id: light.upstairs_hallway
-      transition: 5
+#- id: turn_down_upstairs_hallway_light_at_late_night
+#  alias: Turn down upstairs hallway light when motion stops late at night
+#  trigger:
+#    platform: state
+#    entity_id: binary_sensor.ecolink_motion_detector_sensor
+#    to: 'off'
+#    for:
+#      minutes: 1
+#  condition:
+#    condition: sun
+#    before: sunrise
+#  action:
+#    service: light.turn_off
+#    data:
+#      entity_id: light.upstairs_hallway
+#      transition: 5
 
 ################################################################################
 # This section contains automations for controlling my desk lamp               #
 ################################################################################
 
 # Turn on the desk lamp when movement is detected
-- id: turn_on_desk_light_with_movement
-  alias: Turn on desk light when there is movement
-  trigger:
-    - platform: state
-      entity_id: sensor.movement
-      to: '1'
-  condition:
-    condition: or
-    conditions:
-      - condition: template
-        value_template: "{{ state_attr('sun.sun', 'elevation') < 10 }}"
-      - condition: template
-        value_template: "{{ states.sensor.dark_sky_cloud_coverage.state | float(2) > 75.0 }}"
-  action:
-    - service: homeassistant.turn_on
-      entity_id: light.hue_white_lamp_7
+#- id: turn_on_desk_light_with_movement
+#  alias: Turn on desk light when there is movement
+#  trigger:
+#    - platform: state
+#      entity_id: sensor.movement
+#      to: '1'
+#  condition:
+#    condition: or
+#    conditions:
+#      - condition: template
+#        value_template: "{{ state_attr('sun.sun', 'elevation') < 10 }}"
+#      - condition: template
+#        value_template: "{{ states.sensor.dark_sky_cloud_coverage.state | float(2) > 75.0 }}"
+#  action:
+#    - service: homeassistant.turn_on
+#      entity_id: light.hue_white_lamp_7
 
 # Turn off the desk lamp when there's no movement
-- id: turn_off_desk_light_no_movement
-  alias: Turn off desk light 10 minutes after last movement
-  trigger:
-    - platform: state
-      entity_id: sensor.movement
-      to: '0'
-      for:
-        minutes: 2
-  action:
-    - service: homeassistant.turn_off
-      entity_id: light.hue_white_lamp_7
+#- id: turn_off_desk_light_no_movement
+#  alias: Turn off desk light 10 minutes after last movement
+#  trigger:
+#    - platform: state
+#      entity_id: sensor.movement
+#      to: '0'
+#      for:
+#        minutes: 2
+#  action:
+#    - service: homeassistant.turn_off
+#      entity_id: light.hue_white_lamp_7
 
 ################################################################################
 # This section contains automations for controlling the porch lights based     #
@@ -142,154 +142,154 @@
 ################################################################################
 
 # Turn on the front door light at night
-- id: front_door_night_light_on
-  alias: Turn on front door light at night
-  trigger:
-    platform: sun
-    event: sunset
-    # offset: '-00:45:00'
-  action:
-    service: light.turn_on
-    data:
-      brightness_pct: 100
-      transition: 5
-      entity_id: light.front_door
-
-# Reduce light brightness late night
-- id: front_door_reduce_light
-  alias: Reduce front door light at night
-  trigger:
-    platform: time
-    at: '01:00:00'
-  action:
-    service: light.turn_on
-    data:
-      brightness_pct: 50
-      transition: 5
-      entity_id: [light.front_door, light.back_door]
+#- id: front_door_night_light_on
+#  alias: Turn on front door light at night
+#  trigger:
+#    platform: sun
+#    event: sunset
+#    # offset: '-00:45:00'
+#  action:
+#    service: light.turn_on
+#    data:
+#      brightness_pct: 100
+#      transition: 5
+#      entity_id: light.front_door
+#
+## Reduce light brightness late night
+#- id: front_door_reduce_light
+#  alias: Reduce front door light at night
+#  trigger:
+#    platform: time
+#    at: '01:00:00'
+#  action:
+#    service: light.turn_on
+#    data:
+#      brightness_pct: 50
+#      transition: 5
+#      entity_id: [light.front_door, light.back_door]
 
 # Turn off the front door light in the morning
-- id: front_door_night_light_off
-  alias: Turn off front door light in the morning
-  trigger:
-    platform: sun
-    event: sunrise
-  action:
-    service: light.turn_off
-    data:
-      transition: 5
-      entity_id: light.front_door
+#- id: front_door_night_light_off
+#  alias: Turn off front door light in the morning
+#  trigger:
+#    platform: sun
+#    event: sunrise
+#  action:
+#    service: light.turn_off
+#    data:
+#      transition: 5
+#      entity_id: light.front_door
 
 # Turn on the back door light at night
-- id: back_door_night_light_on
-  alias: Turn on back door light at night
-  trigger:
-    platform: sun
-    event: sunset
-    # offset: '-00:45:00'
-  action:
-    service: light.turn_on
-    data:
-      brightness_pct: 50
-      transition: 5
-      entity_id: light.back_door
+#- id: back_door_night_light_on
+#  alias: Turn on back door light at night
+#  trigger:
+#    platform: sun
+#    event: sunset
+#    # offset: '-00:45:00'
+#  action:
+#    service: light.turn_on
+#    data:
+#      brightness_pct: 50
+#      transition: 5
+#      entity_id: light.back_door
 
 # turn off the back door light in the morning
-- id: back_door_night_light_off
-  alias: Turn off back door light in the morning
-  trigger:
-    platform: sun
-    event: sunrise
-  action:
-    service: light.turn_off
-    data:
-      transition: 5
-      entity_id: light.back_door
+#- id: back_door_night_light_off
+#  alias: Turn off back door light in the morning
+#  trigger:
+#    platform: sun
+#    event: sunrise
+#  action:
+#    service: light.turn_off
+#    data:
+#      transition: 5
+#      entity_id: light.back_door
 
 ##############################################################################
 # This section is for the automation of the foyer lights
 ##############################################################################
-- id: foyer_lights_night_on
-  alias: Turn on the foyer lights at night
-  trigger:
-    platform: sun
-    event: sunset
-  action:
-    service: homeassistant.turn_on
-    entity_id: light.foyer_lights
+#- id: foyer_lights_night_on
+#  alias: Turn on the foyer lights at night
+#  trigger:
+#    platform: sun
+#    event: sunset
+#  action:
+#    service: homeassistant.turn_on
+#    entity_id: light.foyer_lights
 
-- id: foyer_lights_off
-  alias: Turn off the foyer lights late at night
-  trigger:
-    platform: time
-    at: '01:00:00'
-  action:
-    service: homeassistant.turn_off
-    entity_id: light.foyer_lights
+#- id: foyer_lights_off
+#  alias: Turn off the foyer lights late at night
+#  trigger:
+#    platform: time
+#    at: '01:00:00'
+#  action:
+#    service: homeassistant.turn_off
+#    entity_id: light.foyer_lights
 
 ##############################################################################
 # This section is for the automation of the front room lights
 ##############################################################################
-- id: living_room_lights_night_on
-  alias: Turn on the living room lights at night
-  trigger:
-    platform: sun
-    event: sunset
-    offset: '-01:00:00'
-  action:
-    service: homeassistant.turn_on
-    entity_id: light.front_room_light
+#- id: living_room_lights_night_on
+#  alias: Turn on the living room lights at night
+#  trigger:
+#    platform: sun
+#    event: sunset
+#    offset: '-01:00:00'
+#  action:
+#    service: homeassistant.turn_on
+#    entity_id: light.front_room_light
 
-- id: living_room_lights_off
-  alias: Turn off the living room lights late at night
-  trigger:
-    platform: time
-    at: '01:00:00'
-  action:
-    service: homeassistant.turn_off
-    entity_id: light.front_room_light
+#- id: living_room_lights_off
+#  alias: Turn off the living room lights late at night
+#  trigger:
+#    platform: time
+#    at: '01:00:00'
+#  action:
+#    service: homeassistant.turn_off
+#    entity_id: light.front_room_light
 
 ##############################################################################
 # This section is for the automation of the wine rack lights
 ##############################################################################
-- id: wine_rack_lights_night_on
-  alias: Turn on the wine_rack lights at night
-  trigger:
-    platform: sun
-    event: sunset
-    offset: '-01:00:00'
-  action:
-    service: homeassistant.turn_on
-    entity_id: light.wine_rack_lights
+#- id: wine_rack_lights_night_on
+#  alias: Turn on the wine_rack lights at night
+#  trigger:
+#    platform: sun
+#    event: sunset
+#    offset: '-01:00:00'
+#  action:
+#    service: homeassistant.turn_on
+#    entity_id: light.wine_rack_lights
 
-- id: wine_rack_lights_morning_on
-  alias: Turn on the wine rack lights early in the morning
-  trigger:
-    platform: sun
-    event: sunrise
-    offset: '-01:00:00'
-  action:
-    service: homeassistant.turn_on
-    entity_id: light.wine_rack_lights
+#- id: wine_rack_lights_morning_on
+#  alias: Turn on the wine rack lights early in the morning
+#  trigger:
+#    platform: sun
+#    event: sunrise
+#    offset: '-01:00:00'
+#  action:
+#    service: homeassistant.turn_on
+#    entity_id: light.wine_rack_lights
 
-- id: wine_rack_lights_morning_off
-  alias: Turn off the wine rack lights in the morning
-  trigger:
-    platform: sun
-    event: sunrise
-    # offset: '+02:00:00'
-  action:
-    service: homeassistant.turn_off
-    entity_id: light.wine_rack_lights
+#- id: wine_rack_lights_morning_off
+#  alias: Turn off the wine rack lights in the morning
+#  trigger:
+#    platform: sun
+#    event: sunrise
+#    # offset: '+02:00:00'
+#  action:
+#    service: homeassistant.turn_off
+#    entity_id: light.wine_rack_lights
 
-- id: wine_rack_lights_off
-  alias: Turn off the wine rack lights late at night
-  trigger:
-    platform: time
-    at: '01:00:00'
-  action:
-    service: homeassistant.turn_off
-    entity_id: light.wine_rack_lights
+#- id: wine_rack_lights_off
+#  alias: Turn off the wine rack lights late at night
+#  trigger:
+#    platform: time
+#    at: '01:00:00'
+#  action:
+#    service: homeassistant.turn_off
+#    entity_id: light.wine_rack_lights
 
 ################################################################################
 # This section contains automations for controlling kitchen and living room    #
@@ -297,103 +297,103 @@
 ################################################################################
 
 # Turn on the kitchen and living room lights when movement is detected
-- id: Movement_in_room_lights_on
-  alias: Turn on light when movement detected
-  trigger:
-    platform: state
-    entity_id: binary_sensor.ecolink_motion_detector_sensor_2
-    to: 'on'
-  condition:
-    condition: or
-    conditions:
-      - condition: template
-        value_template: "{{ state_attr('sun.sun', 'elevation') < 10 }}"
-      - condition: template
-        value_template: "{{ states.sensor.dark_sky_cloud_coverage.state | float(2) > 75.0 }}"
-  action:
-    service: homeassistant.turn_on
-    entity_id:
-      - switch.sink_lights
-      - light.living_room_fan_lights
+#- id: Movement_in_room_lights_on
+#  alias: Turn on light when movement detected
+#  trigger:
+#    platform: state
+#    entity_id: binary_sensor.ecolink_motion_detector_sensor_2
+#    to: 'on'
+#  condition:
+#    condition: or
+#    conditions:
+#      - condition: template
+#        value_template: "{{ state_attr('sun.sun', 'elevation') < 10 }}"
+#      - condition: template
+#        value_template: "{{ states.sensor.dark_sky_cloud_coverage.state | float(2) > 75.0 }}"
+#  action:
+#    service: homeassistant.turn_on
+#    entity_id:
+#      - switch.sink_lights
+#      - light.living_room_fan_lights
 
 # Turn off the kitchen and living room lights when movement is not detected for 10 min
-- id: Movement_in_room_lights_off
-  alias: Turn off light when no movement
-  trigger:
-    platform: state
-    entity_id: binary_sensor.ecolink_motion_detector_sensor_2
-    to: 'off'
-    for:
-      minutes: 10
-  action:
-    service: homeassistant.turn_off
-    entity_id:
-      - switch.sink_lights
-      - light.living_room_fan_lights
+#- id: Movement_in_room_lights_off
+#  alias: Turn off light when no movement
+#  trigger:
+#    platform: state
+#    entity_id: binary_sensor.ecolink_motion_detector_sensor_2
+#    to: 'off'
+#    for:
+#      minutes: 10
+#  action:
+#    service: homeassistant.turn_off
+#    entity_id:
+#      - switch.sink_lights
+#      - light.living_room_fan_lights
 
 ################################################################################
 # Automations for controlling garage lights with overhead door state           #
 ################################################################################
 
-- id: garage_lights_on_with_left_door
-  alias: Turn garage lights on when left door opens
-  trigger:
-    platform: state
-    entity_id:
-      - sensor.garage_door_sensor_1
-    to: OPEN
-  action:
-    service: homeassistant.turn_on
-    entity_id: light.garage
+#- id: garage_lights_on_with_left_door
+#  alias: Turn garage lights on when left door opens
+#  trigger:
+#    platform: state
+#    entity_id:
+#      - sensor.garage_door_sensor_1
+#    to: OPEN
+#  action:
+#    service: homeassistant.turn_on
+#    entity_id: light.garage
 
-- id: garage_lights_on_with_right_door
-  alias: Turn garage lights on when right door opens
-  trigger:
-    platform: state
-    entity_id:
-      - sensor.garage_door_sensor_2
-    to: OPEN
-  action:
-    service: homeassistant.turn_on
-    entity_id: light.garage
+#- id: garage_lights_on_with_right_door
+#  alias: Turn garage lights on when right door opens
+#  trigger:
+#    platform: state
+#    entity_id:
+#      - sensor.garage_door_sensor_2
+#    to: OPEN
+#  action:
+#    service: homeassistant.turn_on
+#    entity_id: light.garage
 
-- id: garage_lights_off_with_left_door
-  alias: Turn garage lights off when left door closes
-  trigger:
-    platform: state
-    entity_id:
-      - sensor.garage_door_sensor_1
-    to: CLOSED
-  action:
-    service: homeassistant.turn_off
-    entity_id: light.garage
+#- id: garage_lights_off_with_left_door
+#  alias: Turn garage lights off when left door closes
+#  trigger:
+#    platform: state
+#    entity_id:
+#      - sensor.garage_door_sensor_1
+#    to: CLOSED
+#  action:
+#    service: homeassistant.turn_off
+#    entity_id: light.garage
 
-- id: garage_lights_off_with_right_door
-  alias: Turn garage lights off when right door closes
-  trigger:
-    platform: state
-    entity_id:
-      - sensor.garage_door_sensor_2
-    to: CLOSED
-  action:
-    service: homeassistant.turn_off
-    entity_id: light.garage
+#- id: garage_lights_off_with_right_door
+#  alias: Turn garage lights off when right door closes
+#  trigger:
+#    platform: state
+#    entity_id:
+#      - sensor.garage_door_sensor_2
+#    to: CLOSED
+#  action:
+#    service: homeassistant.turn_off
+#    entity_id: light.garage
 
 
 ###############################################################################
 # Notification Alert
 ###############################################################################
-- id: update_available_automation
-  alias: Update Available Notification
-  trigger:
-    - platform: state
-      entity_id: binary_sensor.updater
-      from: 'off'
-      to: 'on'
-  action:
-    - service: notify.notify
-      data_template:
-        message: "Home Assistant {{ state_attr('binary_sensor.updater', 'newest_version') }} is available."
+#- id: update_available_automation
+#  alias: Update Available Notification
+#  trigger:
+#    - platform: state
+#      entity_id: binary_sensor.updater
+#      from: 'off'
+#      to: 'on'
+#  action:
+#    - service: notify.notify
+#      data_template:
+#        message: "Home Assistant {{ state_attr('binary_sensor.updater', 'newest_version') }} is available."
 
 ################################################################################
 # Automations for reporting status of garage door sensors over MQTT            #
