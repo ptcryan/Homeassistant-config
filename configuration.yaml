@@ -37,8 +37,8 @@ recorder:
 # Uncomment next line to use PostgreSQL
   # db_url: postgres://@/homeassistant
   auto_purge: true
-  purge_keep_days: 10
-  commit_interval: 5
+#  purge_keep_days: 10
+#  commit_interval: 5
 
 http:
   # Uncomment this to add a password (recommended!)
